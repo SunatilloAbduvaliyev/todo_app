@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-
+double width = 0.0;
+double height = 0.0;
 extension Size on int{
   //SizedBox height
-  SizedBox boxH() => SizedBox(height: this.h);
+  SizedBox boxH() => SizedBox(height:(this / 812) * height);
   //SizedBox width
-  SizedBox boxW() => SizedBox(width: this.w);
+  SizedBox boxW() => SizedBox(width:(this / 375) * width);
 }
+
+
 
 extension ColorExtension on String {
   toColor() {

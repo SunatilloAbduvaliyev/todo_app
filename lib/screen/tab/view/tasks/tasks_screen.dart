@@ -1,3 +1,4 @@
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 
@@ -22,20 +23,8 @@ class _TasksScreenState extends State<TasksScreen> {
         appBar:  AppBar(
           title: const Text('TaskScreen'),
           actions: [
-            ThemeSwitcher(
-              builder: (BuildContext context ) {
-                return IconButton(onPressed: (){
-                  var brightness = ThemeModelInheritedNotifier.of(context).theme.brightness;
-                  ThemeSwitcher.of(context).changeTheme(
-                    theme: brightness == Brightness.light?darkTheme:lightTheme,
-                    isReversed: brightness == Brightness.light?true:false,
-                  );
-                }, icon:
-                 Icon(
-                    ThemeModelInheritedNotifier.of(context).theme.brightness==Brightness.light? Icons.dark_mode:Icons.light_mode,color: Colors.black,));
-              },
 
-            )
+
           ],
         ),
       ),

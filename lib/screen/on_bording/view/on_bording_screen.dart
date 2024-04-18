@@ -16,15 +16,13 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-
   final PageController pageController = PageController();
   var pageViewController = Get.put(PageViewController());
 
-
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -32,111 +30,117 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             onPressed: () {},
             child: Text(
               'skip'.tr,
-              style: AppTextStyle.medium,
+              style: AppTextStyle.medium.copyWith(fontSize: width * 0.040),
             ),
           ),
           actions: const [
             LanguageButton(),
           ],
         ),
-        body: SizedBox(
-          width: width,
-          child: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: pageController,
-            children: List.generate(
-              pageData.length,
-              (index) => Column(
-                children: [
-                  Image.asset(
-                    pageData[index].image,
-                    width: width * 0.7,
-                    height: height * 0.4,
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: List.generate(
+            pageData.length,
+            (index) => ListView(
+              children: [
+                Image.asset(
+                  pageData[index].image,
+                  width: width * 0.7,
+                  height: height * 0.4,
+                ),
+                30.boxH(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: Text(
+                    pageData[index].title.tr,
+                    style: AppTextStyle.semiBold
+                        .copyWith(fontSize: width * 0.060),
+                    textAlign: TextAlign.center,
                   ),
-                  30.boxH(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: Text(
-                      pageData[index].title.tr,
-                      style: AppTextStyle.semiBold.copyWith(fontSize: 22.sp),
-                      textAlign: TextAlign.center,
-                    ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: Text(
+                    pageData[index].description.tr,
+                    style: AppTextStyle.regular
+                        .copyWith(fontSize: width * 0.040),
+                    textAlign: TextAlign.center,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: Text(
-                      pageData[index].description.tr,
-                      style: AppTextStyle.regular,
-                      textAlign: TextAlign.center,
-                    ),
+                ),
+                20.boxH(),
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...List.generate(
+                        pageData.length,
+                        (index) => Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          width: 26.w,
+                          height: 4.h,
+                          decoration: BoxDecoration(
+                              color: pageViewController.activeIndex.value ==
+                                      index
+                                  ? AppColors.c80FFFF
+                                  : AppColors.cAFAFAF,
+                              borderRadius: BorderRadius.circular(56.r)),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: height*0.10,),
-                  Obx(()=>
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ...List.generate(
-                            pageData.length,
-                                (index) => Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5.w),
-                              width: 26.w,
-                              height: 4.h,
-                              decoration: BoxDecoration(
-                                  color: pageViewController.activeIndex.value == index
-                                      ? AppColors.c80FFFF
-                                      : AppColors.cAFAFAF,
-                                  borderRadius: BorderRadius.circular(56.r)),
-                            ),
-                          ),
-                        ],
-                      ),),
-                  SizedBox(height: height*0.10,),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                       Obx(()=>
-                           Visibility(
-                             visible: pageViewController.isVisible.value,
-                             child: TextButton(
-                               onPressed: () {
-                                 pageViewController.backPageIndex();
-                                 pageController.jumpToPage(pageViewController.activeIndex.value);
-                               },
-                               child: Text(
-                                   'back'.tr,
-                                   style: Theme.of(context).textTheme.titleMedium
-                               ),
-                             ),
-                           ),),
-                        Ink(
-                          decoration: const BoxDecoration(color: AppColors.c_8875FF),
-                          child: InkWell(
-                            onTap: () {
-                              pageViewController.nextPageIndex();
-                              pageController.jumpToPage(pageViewController.activeIndex.value);
+                ),
+                40.boxH(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Obx(
+                        () => Visibility(
+                          visible: pageViewController.isVisible.value,
+                          child: TextButton(
+                            onPressed: () {
+                              pageViewController.backPageIndex();
+                              pageController.jumpToPage(
+                                  pageViewController.activeIndex.value);
                             },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 24.w, vertical: 12.h),
-                              child: Obx(()=>
-                                  Text(
-                                    pageViewController.activeIndex.value == pageData.length - 1
-                                        ? 'get_started'.tr
-                                        : 'next'.tr,
-                                    style: AppTextStyle.regular.copyWith(
-                                        color: Colors.white
-                                    ),
-                                  ),),
+                            child: Text('back'.tr,
+                                style: AppTextStyle.medium
+                                    .copyWith(fontSize: width * 0.040)),
+                          ),
+                        ),
+                      ),
+                      Ink(
+                        decoration:
+                            const BoxDecoration(color: AppColors.c_8875FF),
+                        child: InkWell(
+                          onTap: () {
+                            pageViewController.nextPageIndex();
+                            pageController.jumpToPage(
+                                pageViewController.activeIndex.value);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 24.w, vertical: 12.h),
+                            child: Obx(
+                              () => Text(
+                                  pageViewController.activeIndex.value ==
+                                          pageData.length - 1
+                                      ? 'get_started'.tr
+                                      : 'next'.tr,
+                                  style: AppTextStyle.medium.copyWith(
+                                    fontSize: width * 0.040,
+                                    color: Colors.white,
+                                  )),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

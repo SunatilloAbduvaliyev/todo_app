@@ -14,32 +14,35 @@ class TabBoxScreen extends StatefulWidget {
 }
 
 class _TabBoxScreenState extends State<TabBoxScreen> {
-  final List<Widget> screens = [
-    const ReminderScreen(),
-    const TasksScreen()
-  ];
+  final List<Widget> screens = [const ReminderScreen(), const TasksScreen()];
   var tabController = Get.put(TabBoxController());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Obx(()=>screens[tabController.tabIndex.value]),
+        body: Obx(() => screens[tabController.tabIndex.value]),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: tabController.tabIndex.value,
           onTap: tabController.changeTab,
           items: [
             BottomNavigationBarItem(
-              icon: Image.asset(AppImages.reminder,
-              width: 24.w,
-              height: 24.h,
-              fit: BoxFit.cover,),
-              label: 'Reminders',
-            ),
-            BottomNavigationBarItem(
-              icon:  Image.asset(AppImages.tasks,
+              icon: Image.asset(
+                AppImages.reminder,
                 width: 24.w,
                 height: 24.h,
                 fit: BoxFit.cover,
+                color: Theme.of(context).primaryColor,
+              ),
+              label: 'Reminders',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                AppImages.tasks,
+                width: 24.w,
+                height: 24.h,
+                fit: BoxFit.cover,
+                color: Theme.of(context).primaryColor,
               ),
               label: 'Tasks',
             ),

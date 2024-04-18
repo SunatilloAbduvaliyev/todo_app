@@ -14,8 +14,13 @@ class _LanguageButtonState extends State<LanguageButton> {
   String values = "Uzbek";
   @override
   Widget build(BuildContext context) {
+  double width  = MediaQuery.of(context).size.width;
     return DropdownButton(
       value: values,
+      style: AppTextStyle.medium.copyWith(
+        fontSize: width*0.040,
+        color: Theme.of(context).primaryColor
+      ),
       items: List.generate(
           language.length,
               (index) => DropdownMenuItem(
