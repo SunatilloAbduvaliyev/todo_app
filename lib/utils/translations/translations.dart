@@ -17,6 +17,10 @@ class AppTranslations extends Translations {
           "back": 'Back',
           'next': 'Next',
           'get_started': 'Get Started',
+          'reminders': 'Reminders',
+          'tasks': 'Tasks',
+          'reminder_screen': 'Reminder Screen',
+          'task_screen': 'Task Screen',
         },
         'ru_RU': {
           "on_boarding_first_title": "Начните управлять своими задачами",
@@ -32,6 +36,10 @@ class AppTranslations extends Translations {
           'back': 'Назад',
           "next": 'Следующий',
           'get_started': 'Начать',
+          'reminders': 'Примечания',
+          'tasks': 'Задания',
+          'reminder_screen': 'Экран напоминания',
+          'task_screen':'Экран задач',
         },
         'uz_Uz': {
           "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -47,6 +55,10 @@ class AppTranslations extends Translations {
           "back": 'Orqaga',
           'next': 'Keyingisi',
           'get_started': 'Boshlash',
+          'reminders': 'Eslatmalar',
+          'tasks': 'Vazifalar',
+          'reminder_screen': 'Eslatma ekrani',
+          'task_screen': 'Vazifalar ekrani',
         }
       };
 }

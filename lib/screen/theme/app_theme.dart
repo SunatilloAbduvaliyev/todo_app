@@ -166,7 +166,7 @@ class AppTheme {
   );
   static final ThemeData darkTheme = ThemeData(
       drawerTheme: const DrawerThemeData(
-        backgroundColor: Color(0xFF004F58)
+        backgroundColor: Color(0xFF191C1D)
       ) ,
       scaffoldBackgroundColor: AppColors.c_121212,
       primaryColor: Colors.white,

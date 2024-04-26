@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screen/tab/tab_controller.dart';
-import 'package:todo_app/screen/tab/view/reminder/reminder_screen.dart';
+import 'package:todo_app/screen/tab/view/reminder/view/reminder_screen.dart';
 import 'package:todo_app/screen/tab/view/tasks/tasks_screen.dart';
 import '../../../utils/images/app_images.dart';
 
@@ -34,7 +34,7 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                 fit: BoxFit.cover,
                 color: Theme.of(context).primaryColor,
               ),
-              label: 'Reminders',
+              label: 'reminders'.tr,
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
@@ -44,7 +44,7 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                 fit: BoxFit.cover,
                 color: Theme.of(context).primaryColor,
               ),
-              label: 'Tasks',
+              label: 'tasks'.tr,
             ),
           ],
         ),

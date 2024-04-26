@@ -38,13 +38,14 @@ class DrawerWidget extends StatelessWidget {
                         isReversed: brightness == Brightness.light ? true : false,
                       );
                     },
-                    icon: Icon(
-                      ThemeModelInheritedNotifier.of(context).theme.brightness ==
-                          Brightness.light
-                          ? Icons.dark_mode
-                          : Icons.light_mode,
-                      color: Colors.black,
-                    ),
+                    icon: ThemeModelInheritedNotifier.of(context).theme.brightness ==
+                        Brightness.light?const Icon(
+                      Icons.dark_mode,
+                      color: Colors.blue,
+                    ):const Icon(
+                      Icons.light_mode,
+                      color: Colors.yellow,
+                    )
                   );
                 },
               ),
