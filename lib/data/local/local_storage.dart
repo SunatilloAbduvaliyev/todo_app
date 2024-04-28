@@ -5,10 +5,10 @@ import 'dart:async';
 
 import 'package:todo_app/data/model/reminder_model/reminder_model.dart';
 
-class ReminderController {
+class ReminderCrudController {
   late Box<ReminderModel> _reminderData;
 
-  ReminderController() {
+  ReminderCrudController() {
     _init();
   }
 
@@ -24,7 +24,7 @@ class ReminderController {
     await _reminderData.put(reminderModel.id, reminderModel);
   }
 
-  void deleteQr(int id)  {
+  void deleteReminder({required int id})  {
     _reminderData.delete(id);
   }
 }
