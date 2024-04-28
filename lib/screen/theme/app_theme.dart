@@ -285,7 +285,7 @@ class AppTheme {
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: Color(0xFF4FD8EB),
-        onPrimary: Color(0xFF00363D),
+        onPrimary: Color(0xFF191C1D),
         primaryContainer: Color(0xFF004F58),
         onPrimaryContainer: Color(0xFF97F0FF),
         secondary: Color(0xFFB1CBD0),

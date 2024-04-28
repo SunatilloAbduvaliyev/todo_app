@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/data/local/local_storage.dart';
 import 'package:todo_app/screen/bloc/reminder_event.dart';
 import 'package:todo_app/screen/bloc/reminder_state.dart';
@@ -22,11 +23,16 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       LoadingDataState(),
     );
     try {
-      emit(
-        SuccessDataState(
-          data: await getIt.get<ReminderCrudController>().getAllQr(),
-        ),
-      );
+      List<ReminderModel> data = await getIt.get<ReminderCrudController>().getAllQr();
+      if(data.isNotEmpty){
+        emit(
+          SuccessDataState(
+              data:data,
+          ),
+        );
+      }else{
+        emit(InitialDateState(),);
+      }
     } catch (error) {
       emit(
         ReminderErrorState(

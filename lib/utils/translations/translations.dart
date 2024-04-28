@@ -21,6 +21,12 @@ class AppTranslations extends Translations {
           'tasks': 'Tasks',
           'reminder_screen': 'Reminder Screen',
           'task_screen': 'Task Screen',
+          'create_a_note': 'Create a Note',
+          'title': 'Title',
+          'list_of_notes': 'List of Notes',
+          'create': "Create",
+          'please_enter_task': 'Please Enter Task',
+
         },
         'ru_RU': {
           "on_boarding_first_title": "Начните управлять своими задачами",
@@ -40,6 +46,11 @@ class AppTranslations extends Translations {
           'tasks': 'Задания',
           'reminder_screen': 'Экран напоминания',
           'task_screen':'Экран задач',
+          'create_a_note': 'Создать заметку',
+          'title': 'Заголовок',
+          'list_of_notes': 'Список заметок',
+          'create': 'Создавать',
+          'please_enter_task': 'Пожалуйста, введите задачу',
         },
         'uz_Uz': {
           "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -59,6 +70,11 @@ class AppTranslations extends Translations {
           'tasks': 'Vazifalar',
           'reminder_screen': 'Eslatma ekrani',
           'task_screen': 'Vazifalar ekrani',
+          'create_a_note':'Eslatma Yarating',
+          'title': 'Sarlavha',
+          'list_of_notes': "Eslatmalar Ro'yxati",
+          'create': 'Yaratmoq',
+          'please_enter_task': 'Iltimos, vazifani kiriting',
         }
       };
 }
