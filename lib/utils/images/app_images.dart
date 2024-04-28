@@ -7,4 +7,9 @@ class AppImages{
   static const String tasks = 'assets/images/tasks.png';
   //lottie
   static const String upTodo = 'assets/lottie/up_todo.json';
+  static const String loading = 'assets/lottie/loading.json';
+  static const String reminderLottie = 'assets/lottie/reminder.json';
+  //svg
+  static const String date = 'assets/icons/date.svg';
+  static const String time = 'assets/icons/time.svg';
 }

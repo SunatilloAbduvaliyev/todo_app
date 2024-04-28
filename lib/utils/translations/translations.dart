@@ -26,7 +26,7 @@ class AppTranslations extends Translations {
           'list_of_notes': 'List of Notes',
           'create': "Create",
           'please_enter_task': 'Please Enter Task',
-
+          'rename': 'Rename',
         },
         'ru_RU': {
           "on_boarding_first_title": "Начните управлять своими задачами",
@@ -51,6 +51,7 @@ class AppTranslations extends Translations {
           'list_of_notes': 'Список заметок',
           'create': 'Создавать',
           'please_enter_task': 'Пожалуйста, введите задачу',
+          'rename': 'Переименовать',
         },
         'uz_Uz': {
           "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -75,6 +76,7 @@ class AppTranslations extends Translations {
           'list_of_notes': "Eslatmalar Ro'yxati",
           'create': 'Yaratmoq',
           'please_enter_task': 'Iltimos, vazifani kiriting',
+          'rename': "Nomini o'zgartirish",
         }
       };
 }

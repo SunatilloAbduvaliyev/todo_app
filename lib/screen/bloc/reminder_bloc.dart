@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:todo_app/data/local/local_storage.dart';
 import 'package:todo_app/screen/bloc/reminder_event.dart';
 import 'package:todo_app/screen/bloc/reminder_state.dart';

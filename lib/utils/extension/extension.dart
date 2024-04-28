@@ -7,9 +7,9 @@ extension Size on int{
   //SizedBox width
   SizedBox boxW() => SizedBox(width:(this / 375) * width);
 
-  double get h => (this / 812) * height;
+  double get hSize => (this / 812) * height;
 
-  double get w => (this / 375) * width;
+  double get wSize => (this / 375) * width;
 }
 
 extension ColorExtension on String {
