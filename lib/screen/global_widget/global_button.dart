@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:todo_app/utils/style/app_text_style.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class GlobalButton extends StatefulWidget {
@@ -28,7 +30,20 @@ class _GlobalButtonState extends State<GlobalButton> {
     return ZoomTapAnimation(
       onTap: widget.onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: widget.width.w, vertical:  widget.height.h,),
+        width: widget.width.w,
+        height: widget.height.h,
+        decoration: BoxDecoration(
+          color: widget.color,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            widget.title.tr,
+            style: AppTextStyle.regular.copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
     );
   }

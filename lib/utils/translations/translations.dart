@@ -27,6 +27,11 @@ class AppTranslations extends Translations {
           'create': "Create",
           'please_enter_task': 'Please Enter Task',
           'rename': 'Rename',
+          'select_a_date':'Select a Date',
+          'choose': 'Choose',
+          'cancel':'Cancel',
+          'select_a_time':'Select a Time',
+          'cancel_time':'Cancel',
         },
         'ru_RU': {
           "on_boarding_first_title": "Начните управлять своими задачами",
@@ -52,6 +57,11 @@ class AppTranslations extends Translations {
           'create': 'Создавать',
           'please_enter_task': 'Пожалуйста, введите задачу',
           'rename': 'Переименовать',
+          'select_a_date': 'Выберите дату',
+          'select_a_time': 'Выберите время',
+          'choose': 'Выбирать',
+          'cancel': 'Отмена',
+          'cancel_time':'Отмена',
         },
         'uz_Uz': {
           "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -77,6 +87,11 @@ class AppTranslations extends Translations {
           'create': 'Yaratmoq',
           'please_enter_task': 'Iltimos, vazifani kiriting',
           'rename': "Nomini o'zgartirish",
+          'select_a_date': 'Sana tanlang',
+          'choose':'Tanlang',
+          'cancel': 'Bekor qilish',
+          'cancel_time': 'Bekor',
+          'select_a_time': 'Vaqtni Tanlang'
         }
       };
 }

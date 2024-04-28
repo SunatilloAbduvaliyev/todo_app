@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/data/model/reminder_model/reminder_model.dart';
 import 'package:todo_app/screen/tab/view/reminder/dialog_controller.dart';
 import 'package:todo_app/screen/tab/view/reminder/widget/dialog_text_field.dart';
 import 'package:todo_app/utils/extension/extension.dart';
 import '../../../../../utils/images/app_images.dart';
+import '../../../../bloc/reminder_bloc.dart';
+import '../../../../bloc/reminder_event.dart';
+import '../../../../global_widget/global_button.dart';
 
 addReminderDialog({
   required BuildContext context,
@@ -165,18 +170,15 @@ addReminderDialog({
                                   focusNodeOne.unfocus();
                                   focusNodeTwo.unfocus();
                                   dateTime = await showDatePicker(
-                                    helpText: 'Sanani Tanlang!',
-                                    confirmText: "Tanlang",
-                                    cancelText: "Bekor qilish",
+                                    helpText: 'select_a_date'.tr,
+                                    confirmText: "choose".tr,
+                                    cancelText: "cancel".tr,
                                     barrierDismissible: false,
                                     context: context,
                                     firstDate: DateTime.now(),
                                     lastDate: DateTime(2030),
                                     currentDate: DateTime.now(),
                                   );
-
-                                  if (dateTime != null) {
-                                  }
                                 },
                                 icon: SvgPicture.asset(
                                   AppImages.date,
@@ -191,18 +193,73 @@ addReminderDialog({
                                 )),
                             20.boxW(),
                             IconButton(
-                                onPressed: () {},
-                                icon: SvgPicture.asset(
-                                  AppImages.time,
-                                  width: 24.w,
-                                  height: 24.h,
-                                  colorFilter: ColorFilter.mode(
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .inverseSurface,
-                                    BlendMode.srcIn,
-                                  ),
-                                )),
+                              onPressed: () async {
+                                focusNodeOne.unfocus();
+                                focusNodeTwo.unfocus();
+                                timeOfDay = await showTimePicker(
+                                  helpText: 'select_a_time'.tr,
+                                  confirmText: "choose".tr,
+                                  cancelText: "cancel_time".tr,
+                                  context: context,
+                                  initialEntryMode: TimePickerEntryMode.input,
+                                  initialTime:
+                                      const TimeOfDay(hour: 8, minute: 0),
+                                  builder:
+                                      (BuildContext context, Widget? child) {
+                                    return MediaQuery(
+                                      data: MediaQuery.of(context).copyWith(
+                                          alwaysUse24HourFormat: true),
+                                      child: child!,
+                                    );
+                                  },
+                                );
+
+                                if (timeOfDay != null) {
+                                  dateTime = dateTime!.copyWith(
+                                    hour: timeOfDay!.hour,
+                                    minute: timeOfDay!.minute,
+                                  );
+                                  debugPrint(
+                                      '______________________________$dateTime');
+                                }
+                              },
+                              icon: SvgPicture.asset(
+                                AppImages.time,
+                                width: 24.w,
+                                height: 24.h,
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).colorScheme.inverseSurface,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                            const Expanded(child: SizedBox()),
+                            GlobalButton(
+                              title: 'create',
+                              onTap: () {
+                                context.read<DataBloc>().add(
+                                      InsertDataEvent(
+                                        model: ReminderModel(
+                                          id: DateTime.now().microsecond,
+                                          title: titleController.text,
+                                          tasks: controller.reminderList
+                                              .map<String>((e) => e.toString())
+                                              .toList(),
+                                          isCheck: controller.checkReminderList
+                                              .map(
+                                                (element) =>
+                                                    element?true:false,
+                                              )
+                                              .toList(),
+                                          dateTime: '',
+                                        ),
+                                      ),
+                                    );
+                              },
+                              width: width * 0.30,
+                              height: height * 0.04,
+                              color: Colors.amber,
+                            )
                           ],
                         )
                       ],

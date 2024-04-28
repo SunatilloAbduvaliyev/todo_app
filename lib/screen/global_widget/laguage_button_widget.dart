@@ -11,23 +11,25 @@ class LanguageButton extends StatefulWidget {
 
 class _LanguageButtonState extends State<LanguageButton> {
   final List<String> language = ['English', 'Russia', 'Uzbek'];
-  String values = "Uzbek";
+  String values = 'Uzbek';
+
   @override
   Widget build(BuildContext context) {
-  double width  = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     return DropdownButton(
       value: values,
       style: AppTextStyle.medium.copyWith(
-        fontSize: width*0.040,
-        color: Theme.of(context).primaryColor
-      ),
+          fontSize: width * 0.040, color: Theme.of(context).primaryColor),
       items: List.generate(
-          language.length,
-              (index) => DropdownMenuItem(
-            value: language[index],
-            child:
-            Text(language[index], style: AppTextStyle.medium),
-          )),
+        language.length,
+        (index) => DropdownMenuItem(
+          value: language[index],
+          child: Text(
+            language[index],
+            style: AppTextStyle.medium,
+          ),
+        ),
+      ),
       onChanged: (value) {
         if (value == 'English') {
           Get.updateLocale(const Locale('en_US'));
@@ -42,4 +44,3 @@ class _LanguageButtonState extends State<LanguageButton> {
     );
   }
 }
-
