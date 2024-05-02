@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,8 +7,7 @@ import 'package:todo_app/screen/tab/view/reminder/dialog_controller.dart';
 import 'package:todo_app/screen/tab/view/reminder/widget/dialog_text_field.dart';
 import 'package:todo_app/utils/extension/extension.dart';
 import '../../../../../utils/images/app_images.dart';
-import '../../../../bloc/reminder_bloc.dart';
-import '../../../../bloc/reminder_event.dart';
+import '../../../../data_controller/data_controller.dart';
 import '../../../../global_widget/global_button.dart';
 
 addReminderDialog({
@@ -20,7 +18,8 @@ addReminderDialog({
   final TextEditingController tasksController = TextEditingController();
   TextEditingController renameController = TextEditingController();
   bool addTaskList = true;
-  var controller = Get.put(DialogController());
+  DialogController controller = Get.put(DialogController());
+  DataController dataController = Get.put(DataController());
   width = MediaQuery.sizeOf(context).width;
   height = MediaQuery.sizeOf(context).height;
   final FocusNode focusNodeOne = FocusNode();
@@ -145,6 +144,7 @@ addReminderDialog({
                                 controller: tasksController,
                                 labelText: 'list_of_notes',
                                 isListTask: true,
+                                isValidate: false,
                               ),
                             ),
                             IconButton(
@@ -235,26 +235,29 @@ addReminderDialog({
                             ),
                             const Expanded(child: SizedBox()),
                             GlobalButton(
-                              title: 'create',
+                              title: 'create'.tr,
                               onTap: () {
-                                context.read<DataBloc>().add(
-                                      InsertDataEvent(
-                                        model: ReminderModel(
-                                          id: DateTime.now().microsecond,
-                                          title: titleController.text,
-                                          tasks: controller.reminderList
-                                              .map<String>((e) => e.toString())
-                                              .toList(),
-                                          isCheck: controller.checkReminderList
-                                              .map(
-                                                (element) =>
-                                                    element?true:false,
-                                              )
-                                              .toList(),
-                                          dateTime: '',
-                                        ),
-                                      ),
-                                    );
+                                if (formKey.currentState!.validate() &&
+                                    controller.reminderList.isNotEmpty) {
+                                  dataController.insertReminder(reminderModel: ReminderModel(
+                                    id: DateTime.now().microsecond,
+                                    title: titleController.text,
+                                    tasks: controller.reminderList
+                                        .map<String>(
+                                            (e) => e.toString())
+                                        .toList(),
+                                    isCheck: controller
+                                        .checkReminderList
+                                        .map(
+                                          (element) =>
+                                      element ? true : false,
+                                    )
+                                        .toList(),
+                                    dateTime: DateTime.now(),
+                                  ));
+                                  controller.clearLists();
+                                  Navigator.pop(context);
+                                }
                               },
                               width: width * 0.30,
                               height: height * 0.04,

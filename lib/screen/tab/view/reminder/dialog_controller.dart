@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class DialogController extends GetxController{
-
+  RxBool isSpecific = false.obs;
   RxList reminderList = [].obs;
   RxList checkReminderList = [].obs;
   void addReminder(String reminder){
@@ -18,4 +18,12 @@ class DialogController extends GetxController{
     reminderList.removeAt(index);
     reminderList.insert(index, newReminder);
   }
+
+  void clearLists(){
+    reminderList.clear();
+    checkReminderList.clear();
+  }
+
+
+
 }

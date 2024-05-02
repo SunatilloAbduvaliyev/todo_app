@@ -21,7 +21,7 @@ class ReminderModelAdapter extends TypeAdapter<ReminderModel> {
       title: fields[0] as String,
       tasks: (fields[1] as List).cast<String>(),
       isCheck: (fields[2] as List).cast<bool>(),
-      dateTime: fields[3] as String,
+      dateTime: fields[3] as DateTime,
     );
   }
 

@@ -10,7 +10,7 @@ class ReminderModel{
   @HiveField(2)
   final List<bool> isCheck;
   @HiveField(3)
-  final String dateTime;
+  final DateTime dateTime;
   @HiveField(4)
   final int id;
 
