@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -54,8 +55,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: Text(
                     pageData[index].title.tr,
-                    style: AppTextStyle.semiBold
-                        .copyWith(fontSize: width * 0.060),
+                    style:
+                        AppTextStyle.semiBold.copyWith(fontSize: width * 0.060),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -63,8 +64,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: Text(
                     pageData[index].description.tr,
-                    style: AppTextStyle.regular
-                        .copyWith(fontSize: width * 0.040),
+                    style:
+                        AppTextStyle.regular.copyWith(fontSize: width * 0.040),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -80,10 +81,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           width: 26.w,
                           height: 4.h,
                           decoration: BoxDecoration(
-                              color: pageViewController.activeIndex.value ==
-                                      index
-                                  ? AppColors.c80FFFF
-                                  : AppColors.cAFAFAF,
+                              color:
+                                  pageViewController.activeIndex.value == index
+                                      ? AppColors.c80FFFF
+                                      : AppColors.cAFAFAF,
                               borderRadius: BorderRadius.circular(56.r)),
                         ),
                       ),
@@ -112,14 +113,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ),
                       Ink(
-                        decoration:
-                            const BoxDecoration(color: AppColors.c_8875FF),
+                        decoration: BoxDecoration(
+                          color: AppColors.c_8875FF,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: InkWell(
                           onTap: () {
                             pageViewController.nextPageIndex();
                             pageController.jumpToPage(
                                 pageViewController.activeIndex.value);
                           },
+                          borderRadius: BorderRadius.circular(10),
                           child: Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: 24.w, vertical: 12.h),

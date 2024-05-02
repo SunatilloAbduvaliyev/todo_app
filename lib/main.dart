@@ -15,7 +15,7 @@ Future<void> main() async {
   Hive.registerAdapter<ReminderModel>(ReminderModelAdapter());
   await Hive.initFlutter();
   DataController controller = Get.put(DataController());
-  controller.getAllReminders();
+  await controller.getAllReminders();
   setUpDI();
   runApp(
     const MyApp(),

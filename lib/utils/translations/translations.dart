@@ -32,6 +32,10 @@ class AppTranslations extends Translations {
           'cancel':'Cancel',
           'select_a_time':'Select a Time',
           'cancel_time':'Cancel',
+          'deleting':'Deleting',
+          'yes': "Yes",
+          'no': "No",
+          'please_enter_a_list_of_tasks':'Please enter a list of tasks',
         },
         'ru_RU': {
           "on_boarding_first_title": "Начните управлять своими задачами",
@@ -62,6 +66,10 @@ class AppTranslations extends Translations {
           'choose': 'Выбирать',
           'cancel': 'Отмена',
           'cancel_time':'Отмена',
+          'deleting':'Удаление',
+          'yes': 'Да',
+          'no': 'Нет',
+          "please_enter_a_list_of_tasks":"Введите список задач",
         },
         'uz_Uz': {
           "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -91,7 +99,11 @@ class AppTranslations extends Translations {
           'choose':'Tanlang',
           'cancel': 'Bekor qilish',
           'cancel_time': 'Bekor',
-          'select_a_time': 'Vaqtni Tanlang'
+          'select_a_time': 'Vaqtni Tanlang',
+          'deleting':'Oʻchirilmoqda',
+          'yes': 'Ha',
+          'no': "Yo'q",
+          "please_enter_a_list_of_tasks":"Iltimos, vazifalar ro'yxatini kiriting",
         }
       };
 }

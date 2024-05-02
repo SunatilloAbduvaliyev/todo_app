@@ -11,17 +11,19 @@ class DataController extends GetxController{
   RxList checkReminderList = [].obs;
   RxString errorMessage = "".obs;
   Future<void> getAllReminders() async {
+    isLoading.value = true;
     try {
       List<ReminderModel> data = await getIt.get<ReminderCrudController>().getAllQr();
       if(data.isNotEmpty){
-        data.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+        data.sort((a, b) => b.dateOrder.compareTo(a.dateOrder));
         reminderList.value = data;
       }else{
         reminderList.value = [];
       }
-      isLoading.value = false;
     } catch (error) {
       errorMessage.value = error.toString();
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -40,7 +42,7 @@ class DataController extends GetxController{
     try {
       await getIt.get<ReminderCrudController>().insertReminder(reminderModel);
       List<ReminderModel> data = await getIt.get<ReminderCrudController>().getAllQr();
-      data.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+      data.sort((a, b) => b.dateOrder.compareTo(a.dateOrder));
       reminderList.value = data;
     } catch (error) {
       errorMessage.value = error.toString();

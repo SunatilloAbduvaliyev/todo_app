@@ -22,13 +22,14 @@ class ReminderModelAdapter extends TypeAdapter<ReminderModel> {
       tasks: (fields[1] as List).cast<String>(),
       isCheck: (fields[2] as List).cast<bool>(),
       dateTime: fields[3] as DateTime,
+      dateOrder: fields[5] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, ReminderModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class ReminderModelAdapter extends TypeAdapter<ReminderModel> {
       ..writeByte(3)
       ..write(obj.dateTime)
       ..writeByte(4)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(5)
+      ..write(obj.dateOrder);
   }
 
   @override
