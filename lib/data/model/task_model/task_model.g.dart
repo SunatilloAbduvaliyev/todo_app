@@ -1,50 +1,39 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'reminder_model.dart';
+part of 'task_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ReminderModelAdapter extends TypeAdapter<ReminderModel> {
+class TaskModelAdapter extends TypeAdapter<TaskModel> {
   @override
   final int typeId = 0;
 
   @override
-  ReminderModel read(BinaryReader reader) {
+  TaskModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ReminderModel(
+    return TaskModel(
+      tasks: (fields[0] as List).cast<String>(),
+      dates: (fields[2] as List).cast<DateTime>(),
+      isDone: (fields[3] as List).cast<bool>(),
       id: fields[4] as int,
-      title: fields[0] as String,
-      tasks: (fields[1] as List).cast<String>(),
-      isCheck: (fields[2] as List).cast<bool>(),
-      dateTime: fields[3] as DateTime,
-      dateOrder: fields[5] as DateTime,
-      checkCount: fields[6] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ReminderModel obj) {
+  void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.title)
-      ..writeByte(1)
       ..write(obj.tasks)
       ..writeByte(2)
-      ..write(obj.isCheck)
+      ..write(obj.dates)
       ..writeByte(3)
-      ..write(obj.dateTime)
-      ..writeByte(4)
-      ..write(obj.id)
-      ..writeByte(5)
-      ..write(obj.dateOrder)
-      ..writeByte(6)
-      ..write(obj.checkCount);
+      ..write(obj.isDone);
   }
 
   @override
@@ -53,7 +42,7 @@ class ReminderModelAdapter extends TypeAdapter<ReminderModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ReminderModelAdapter &&
+      other is TaskModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

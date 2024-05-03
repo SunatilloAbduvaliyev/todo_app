@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screen/tab/tab_controller.dart';
 import 'package:todo_app/screen/tab/view/reminder/view/reminder_screen.dart';
-import 'package:todo_app/screen/tab/view/tasks/tasks_screen.dart';
+import 'package:todo_app/screen/tab/view/tasks/view/tasks_screen.dart';
 import '../../../utils/images/app_images.dart';
 
 class TabBoxScreen extends StatefulWidget {

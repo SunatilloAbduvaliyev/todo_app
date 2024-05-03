@@ -5,13 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:todo_app/screen/data_controller/data_controller.dart';
 import 'package:todo_app/screen/global_widget/drawer_widget.dart';
-import 'package:todo_app/screen/tab/view/reminder/dialogs/add_reminder_dialog.dart';
+import 'package:todo_app/screen/tab/view/reminder/dialogs/view/add_reminder_dialog.dart';
 import 'package:todo_app/utils/extension/extension.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../../../data/model/reminder_model/reminder_model.dart';
 import '../../../../../utils/images/app_images.dart';
 import '../../../../../utils/style/app_text_style.dart';
+import '../reminder_controller.dart';
 
 class ReminderScreen extends StatefulWidget {
   const ReminderScreen({super.key});
@@ -24,7 +25,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
   DataController dataController = Get.find<DataController>();
 
   Future<void> _init() async {
-    await dataController.getAllReminders();
+    await dataController.getAllReminder();
   }
 
   @override
@@ -32,6 +33,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
     _init();
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                     : ListView.builder(
                         itemCount: dataController.reminderList.length,
                         itemBuilder: (BuildContext context, int index) {
+                              dataController.reminderList[index].checkCount;
                           debugPrint(
                               '_______________________________________list builder');
                           return Dismissible(
@@ -84,7 +87,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                   },
                                 );
                               } else {
-                                 addReminderDialog(
+                                await addReminderDialog(
                                   context: context,
                                   reminderModel:
                                       dataController.reminderList[index],
@@ -92,7 +95,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                               }
                             },
                             onDismissed: (direction) {
-                               dataController.deleteReminder(
+                              dataController.deleteReminder(
                                   id: dataController.reminderList[index].id);
                             },
                             background: Container(
@@ -144,58 +147,62 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                     dataController
                                         .reminderList[index].tasks.length,
                                     (taskIndex) => Obx(
-                                      () => Row(
-                                        children: [
-                                          Checkbox(
-                                            value: dataController
-                                                .reminderList[index]
-                                                .isCheck[taskIndex],
-                                            onChanged: (value) {
+                                      () => ZoomTapAnimation(
+                                        child: Row(
+                                          children: [
+                                            Checkbox(
+                                              value: dataController
+                                                  .reminderList[index]
+                                                  .isCheck[taskIndex],
+                                              onChanged: (value) {
+                                                dataController
+                                                        .reminderList[index]
+                                                        .isCheck[taskIndex] =
+                                                    !dataController
+                                                        .reminderList[index]
+                                                        .isCheck[taskIndex];
+                                                dataController.updateReminder(
+                                                  dataModel: ReminderModel(
+                                                    dateOrder: dataController
+                                                        .reminderList[index]
+                                                        .dateOrder,
+                                                    id: dataController
+                                                        .reminderList[index].id,
+                                                    title: dataController
+                                                        .reminderList[index]
+                                                        .title,
+                                                    dateTime: dataController
+                                                        .reminderList[index]
+                                                        .dateTime,
+                                                    isCheck: dataController
+                                                        .reminderList[index]
+                                                        .isCheck,
+                                                    tasks: dataController
+                                                        .reminderList[index]
+                                                        .tasks,
+                                                    checkCount: 0,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            Text(
                                               dataController.reminderList[index]
-                                                      .isCheck[taskIndex] =
-                                                  !dataController
-                                                      .reminderList[index]
-                                                      .isCheck[taskIndex];
-                                              dataController.updateReminder(
-                                                reminderModel: ReminderModel(
-                                                  dateOrder: dataController
-                                                      .reminderList[index]
-                                                      .dateOrder,
-                                                  id: dataController
-                                                      .reminderList[index].id,
-                                                  title: dataController
-                                                      .reminderList[index]
-                                                      .title,
-                                                  dateTime: dataController
-                                                      .reminderList[index]
-                                                      .dateTime,
-                                                  isCheck: dataController
-                                                      .reminderList[index]
-                                                      .isCheck,
-                                                  tasks: dataController
-                                                      .reminderList[index]
-                                                      .tasks,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          Text(
-                                            dataController.reminderList[index]
-                                                .tasks[taskIndex],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge!
-                                                .copyWith(
-                                                  fontFamily: 'Itim',
-                                                  decoration: dataController
-                                                          .reminderList[index]
-                                                          .isCheck[taskIndex]
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                          ),
-                                        ],
+                                                  .tasks[taskIndex],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge!
+                                                  .copyWith(
+                                                    fontFamily: 'Itim',
+                                                    decoration: dataController
+                                                            .reminderList[index]
+                                                            .isCheck[taskIndex]
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:todo_app/screen/data_controller/data_controller.dart';
 import 'package:todo_app/screen/route.dart';
+import 'package:todo_app/screen/tab/view/reminder/reminder_controller.dart';
 import 'package:todo_app/screen/theme/app_theme.dart';
 import 'package:todo_app/services/services_locator.dart';
 import 'package:todo_app/utils/translations/translations.dart';
@@ -15,7 +15,7 @@ Future<void> main() async {
   Hive.registerAdapter<ReminderModel>(ReminderModelAdapter());
   await Hive.initFlutter();
   DataController controller = Get.put(DataController());
-  await controller.getAllReminders();
+  await controller.getAllReminder();
   setUpDI();
   runApp(
     const MyApp(),

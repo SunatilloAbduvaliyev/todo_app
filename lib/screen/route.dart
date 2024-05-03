@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/screen/splash/splash_screen.dart';
 import 'package:todo_app/screen/tab/view/reminder/view/reminder_screen.dart';
 import 'package:todo_app/screen/tab/view/tab_screen.dart';
-import 'package:todo_app/screen/tab/view/tasks/tasks_screen.dart';
+import 'package:todo_app/screen/tab/view/tasks/view/tasks_screen.dart';
 import 'on_bording/view/on_bording_screen.dart';
 
 class AppRoute {

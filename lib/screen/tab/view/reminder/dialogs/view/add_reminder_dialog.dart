@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/data/model/reminder_model/reminder_model.dart';
-import 'package:todo_app/screen/tab/view/reminder/dialog_controller.dart';
+import 'package:todo_app/screen/tab/view/reminder/dialogs/dialog_controller.dart';
 import 'package:todo_app/screen/tab/view/reminder/widget/dialog_text_field.dart';
 import 'package:todo_app/utils/extension/extension.dart';
-import '../../../../../utils/images/app_images.dart';
-import '../../../../data_controller/data_controller.dart';
-import '../../../../global_widget/global_button.dart';
+import '../../../../../../utils/images/app_images.dart';
+import '../../../../../global_widget/global_button.dart';
+import '../../reminder_controller.dart';
 
 addReminderDialog({
   required BuildContext context,
@@ -47,6 +47,7 @@ addReminderDialog({
   height = MediaQuery.sizeOf(context).height;
   final FocusNode focusNodeOne = FocusNode();
   final FocusNode focusNodeTwo = FocusNode();
+  final FocusNode focusNodeThree = FocusNode();
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -82,6 +83,7 @@ addReminderDialog({
                       ),
                       5.boxH(),
                       DialogTextField(
+                        focusNode: focusNodeThree,
                         controller: titleController,
                         labelText: 'title',
                       ),
@@ -101,6 +103,7 @@ addReminderDialog({
                                               controller.reminderList[index];
                                           return AlertDialog(
                                             title: DialogTextField(
+                                              focusNode: focusNodeOne,
                                               controller: renameController,
                                               labelText: 'rename',
                                             ),
@@ -162,6 +165,7 @@ addReminderDialog({
                           Expanded(
                             child: Obx(
                               () => DialogTextField(
+                                focusNode: focusNodeTwo,
                                 controller: tasksController,
                                 labelText: 'list_of_notes',
                                 isListTask: true,
@@ -191,6 +195,7 @@ addReminderDialog({
                             onPressed: () async {
                               focusNodeOne.unfocus();
                               focusNodeTwo.unfocus();
+                              focusNodeThree.unfocus();
                               dateTime = await showDatePicker(
                                 helpText: 'select_a_date'.tr,
                                 confirmText: "choose".tr,
@@ -226,6 +231,7 @@ addReminderDialog({
                             onPressed: () async {
                               focusNodeOne.unfocus();
                               focusNodeTwo.unfocus();
+                              focusNodeThree.unfocus();
                               timeOfDay = await showTimePicker(
                                 helpText: 'select_a_time'.tr,
                                 confirmText: "choose".tr,
@@ -281,7 +287,7 @@ addReminderDialog({
                                     dateTime != null &&
                                     timeOfDay != null) {
                                   dataController.insertReminder(
-                                    reminderModel: ReminderModel(
+                                    dataModel: ReminderModel(
                                       id: DateTime.now().microsecond,
                                       dateOrder: DateTime.now(),
                                       title: titleController.text,
@@ -294,6 +300,7 @@ addReminderDialog({
                                           )
                                           .toList(),
                                       dateTime: dateTime!,
+                                      checkCount:0,
                                     ),
                                   );
                                   controller.clearLists();
@@ -313,7 +320,7 @@ addReminderDialog({
                                 if (formKey.currentState!.validate() &&
                                     controller.reminderList.isNotEmpty) {
                                   dataController.insertReminder(
-                                    reminderModel: ReminderModel(
+                                    dataModel: ReminderModel(
                                       id: reminderModel.id,
                                       dateOrder: reminderModel.dateOrder,
                                       title: titleController.text,
@@ -326,6 +333,7 @@ addReminderDialog({
                                           )
                                           .toList(),
                                       dateTime: dateTime!,
+                                      checkCount: reminderModel.checkCount,
                                     ),
                                   );
                                   controller.clearLists();

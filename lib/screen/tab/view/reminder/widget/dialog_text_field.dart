@@ -8,15 +8,18 @@ class DialogTextField extends StatelessWidget {
     required this.labelText,
     this.isValidate = true,
     this.isListTask = false,
+    required this.focusNode,
   });
 
   final TextEditingController controller;
   final String labelText;
   final bool isValidate;
   final bool isListTask;
+  final FocusNode focusNode;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       validator: isValidate
           ? (value) {
               if (value!.isEmpty) {

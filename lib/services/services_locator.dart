@@ -5,5 +5,5 @@ import '../../../data/local/local_storage.dart';
 final GetIt getIt = GetIt.instance;
 
 void setUpDI(){
-  getIt.registerSingleton<ReminderCrudController>(ReminderCrudController());
+  getIt.registerSingleton<DataCrudController>(DataCrudController());
 }

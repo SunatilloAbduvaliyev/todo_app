@@ -37,6 +37,7 @@ class DialogController extends GetxController{
   void dateTrueIsError()=>dateTimeIsError.value = false;
   void timeFalseIsError()=>timeOfIsError.value = true;
   void timeTrueIsError()=>timeOfIsError.value = false;
+
   void tasksIsEmpty()=>taskIsEmpty.value = true;
   void tasksIsNotEmpty()=>taskIsEmpty.value = false;
 }

@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
-
-import '../../data/local/local_storage.dart';
-import '../../data/model/reminder_model/reminder_model.dart';
-import '../../services/services_locator.dart';
+import '../../../../data/local/local_storage.dart';
+import '../../../../data/model/reminder_model/reminder_model.dart';
+import '../../../../services/services_locator.dart';
 
 
 class DataController extends GetxController{
@@ -10,10 +9,11 @@ class DataController extends GetxController{
   RxList reminderList = [].obs;
   RxList checkReminderList = [].obs;
   RxString errorMessage = "".obs;
-  Future<void> getAllReminders() async {
+
+  Future<void> getAllReminder() async {
     isLoading.value = true;
     try {
-      List<ReminderModel> data = await getIt.get<ReminderCrudController>().getAllQr();
+      List<ReminderModel> data = await getIt.get<DataCrudController>().getAllReminder();
       if(data.isNotEmpty){
         data.sort((a, b) => b.dateOrder.compareTo(a.dateOrder));
         reminderList.value = data;
@@ -27,21 +27,21 @@ class DataController extends GetxController{
     }
   }
 
-  Future<void> insertReminder({required ReminderModel reminderModel}) async {
+  Future<void> insertReminder({required ReminderModel dataModel}) async {
     isLoading.value = true;
     try {
-      await getIt.get<ReminderCrudController>().insertReminder(reminderModel);
-      getAllReminders();
+      await getIt.get<DataCrudController>().insertReminder(dataModel);
+      getAllReminder();
     } catch (error) {
       errorMessage.value = error.toString();
     }
   }
 
 
-  Future<void> updateReminder({required ReminderModel reminderModel}) async {
+  Future<void> updateReminder({required ReminderModel dataModel}) async {
     try {
-      await getIt.get<ReminderCrudController>().insertReminder(reminderModel);
-      List<ReminderModel> data = await getIt.get<ReminderCrudController>().getAllQr();
+      await getIt.get<DataCrudController>().insertReminder(dataModel);
+      List<ReminderModel> data = await getIt.get<DataCrudController>().getAllReminder();
       data.sort((a, b) => b.dateOrder.compareTo(a.dateOrder));
       reminderList.value = data;
     } catch (error) {
@@ -49,11 +49,11 @@ class DataController extends GetxController{
     }
   }
 
-  void deleteReminder({required int id}){
+  Future<void> deleteReminder({required int id})async{
     isLoading.value = true;
     try {
-      getIt.get<ReminderCrudController>().deleteReminder(id: id);
-      getAllReminders();
+      getIt.get<DataCrudController>().deleteData(id: id);
+      getAllReminder();
     } catch (error) {
       errorMessage.value = error.toString();
     }
@@ -62,11 +62,11 @@ class DataController extends GetxController{
   Future<void> restartReminder()async{
     isLoading.value = true;
     try {
-      List<ReminderModel>  data = await getIt.get<ReminderCrudController>().getAllQr();
+      List<ReminderModel>  data = await getIt.get<DataCrudController>().getAllReminder();
       await Future.forEach(data, (element){
-        getIt.get<ReminderCrudController>().deleteReminder(id: element.id);
+        getIt.get<DataCrudController>().deleteData(id: element.id);
       });
-      getAllReminders();
+      getAllReminder();
     } catch (error) {
       errorMessage.value = error.toString();
     }

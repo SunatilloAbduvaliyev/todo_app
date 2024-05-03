@@ -15,6 +15,8 @@ class ReminderModel{
   final int id;
   @HiveField(5)
   final DateTime dateOrder;
+  @HiveField(6)
+  final int checkCount;
 
   ReminderModel({
     required this.id,
@@ -23,6 +25,7 @@ class ReminderModel{
     required this.isCheck,
     required this.dateTime,
     required this.dateOrder,
+    required this.checkCount,
 });
   
 }
