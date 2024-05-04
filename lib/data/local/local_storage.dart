@@ -19,20 +19,30 @@ class DataCrudController {
     _reminderData = await Hive.openBox<ReminderModel>('qr');
     _taskData = await Hive.openBox<TaskModel>('tasks');
   }
-
+  //ReminderModel
   Future<List<ReminderModel>> getAllReminder() async {
     return _reminderData.values.toList();
-  }
-
-  Future<List<TaskModel>> getAllTasks() async {
-    return _taskData.values.toList();
   }
 
   Future<void> insertReminder(ReminderModel reminderModel) async {
     await _reminderData.put(reminderModel.id, reminderModel);
   }
 
-  void deleteData({required int id})  {
-    _reminderData.delete(id);
+  Future<void> deleteReminder({required int id})  async{
+    await _reminderData.delete(id);
+  }
+
+  //TaskModel
+  Future<void> insertTask(TaskModel taskModel) async {
+    await _taskData.put(taskModel.id, taskModel);
+  }
+
+  Future<List<TaskModel>> getAllTasks() async {
+    return _taskData.values.toList();
+  }
+
+
+  Future<void> deleteTask({required DateTime id}) async {
+    await _taskData.delete(id);
   }
 }

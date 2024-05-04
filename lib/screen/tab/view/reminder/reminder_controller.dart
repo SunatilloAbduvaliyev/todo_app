@@ -4,7 +4,7 @@ import '../../../../data/model/reminder_model/reminder_model.dart';
 import '../../../../services/services_locator.dart';
 
 
-class DataController extends GetxController{
+class ReminderController extends GetxController{
   RxBool isLoading = false.obs;
   RxList reminderList = [].obs;
   RxList checkReminderList = [].obs;
@@ -27,10 +27,10 @@ class DataController extends GetxController{
     }
   }
 
-  Future<void> insertReminder({required ReminderModel dataModel}) async {
+  Future<void> insertReminder({required ReminderModel reminderModel}) async {
     isLoading.value = true;
     try {
-      await getIt.get<DataCrudController>().insertReminder(dataModel);
+      await getIt.get<DataCrudController>().insertReminder(reminderModel);
       getAllReminder();
     } catch (error) {
       errorMessage.value = error.toString();
@@ -38,9 +38,9 @@ class DataController extends GetxController{
   }
 
 
-  Future<void> updateReminder({required ReminderModel dataModel}) async {
+  Future<void> updateReminder({required ReminderModel reminderModel}) async {
     try {
-      await getIt.get<DataCrudController>().insertReminder(dataModel);
+      await getIt.get<DataCrudController>().insertReminder(reminderModel);
       List<ReminderModel> data = await getIt.get<DataCrudController>().getAllReminder();
       data.sort((a, b) => b.dateOrder.compareTo(a.dateOrder));
       reminderList.value = data;
@@ -52,7 +52,7 @@ class DataController extends GetxController{
   Future<void> deleteReminder({required int id})async{
     isLoading.value = true;
     try {
-      getIt.get<DataCrudController>().deleteData(id: id);
+      await getIt.get<DataCrudController>().deleteReminder(id: id);
       getAllReminder();
     } catch (error) {
       errorMessage.value = error.toString();
@@ -64,7 +64,7 @@ class DataController extends GetxController{
     try {
       List<ReminderModel>  data = await getIt.get<DataCrudController>().getAllReminder();
       await Future.forEach(data, (element){
-        getIt.get<DataCrudController>().deleteData(id: element.id);
+         getIt.get<DataCrudController>().deleteReminder(id: element.id);
       });
       getAllReminder();
     } catch (error) {

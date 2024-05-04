@@ -10,7 +10,7 @@ class TaskModel {
   @HiveField(3)
   final List<bool> isDone;
   @HiveField(4)
-  final int id;
+  final DateTime id;
 
   TaskModel({
     required this.tasks,

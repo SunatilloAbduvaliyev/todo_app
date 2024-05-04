@@ -9,15 +9,11 @@ class GlobalButton extends StatefulWidget {
     super.key,
     required this.title,
     required this.onTap,
-    required this.width,
-    required this.height,
     required this.color,
   });
 
   final String title;
   final VoidCallback onTap;
-  final double width;
-  final double height;
   final Color color;
 
   @override
@@ -30,17 +26,18 @@ class _GlobalButtonState extends State<GlobalButton> {
     return ZoomTapAnimation(
       onTap: widget.onTap,
       child: Container(
-        width: widget.width.w,
-        height: widget.height.h,
         decoration: BoxDecoration(
           color: widget.color,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Center(
-          child: Text(
-            widget.title.tr,
-            style: AppTextStyle.regular.copyWith(
-              color: Colors.white,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: Center(
+            child: Text(
+              widget.title.tr,
+              style: AppTextStyle.regular.copyWith(
+                color: Colors.white,
+              ),
             ),
           ),
         ),

@@ -20,7 +20,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       tasks: (fields[0] as List).cast<String>(),
       dates: (fields[2] as List).cast<DateTime>(),
       isDone: (fields[3] as List).cast<bool>(),
-      id: fields[4] as int,
+      id: fields[4] as DateTime,
     );
   }
 

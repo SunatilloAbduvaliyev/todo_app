@@ -36,6 +36,8 @@ class AppTranslations extends Translations {
           'yes': "Yes",
           'no': "No",
           'please_enter_a_list_of_tasks':'Please enter a list of tasks',
+          "enter_your_daily_task":"Enter your daily task",
+          'add_a_task':'Add Task',
         },
         'ru_RU': {
           "on_boarding_first_title": "Начните управлять своими задачами",
@@ -70,6 +72,8 @@ class AppTranslations extends Translations {
           'yes': 'Да',
           'no': 'Нет',
           "please_enter_a_list_of_tasks":"Введите список задач",
+          "enter_your_daily_task":"Введите свою ежедневную задачу",
+          "add_a_task":"Добавить задачу",
         },
         'uz_Uz': {
           "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -104,6 +108,8 @@ class AppTranslations extends Translations {
           'yes': 'Ha',
           'no': "Yo'q",
           "please_enter_a_list_of_tasks":"Iltimos, vazifalar ro'yxatini kiriting",
+          "enter_your_daily_task":"Kundalik vazifangizni kiriting",
+          "add_a_task":"Vazifa Qo'shing",
         }
       };
 }

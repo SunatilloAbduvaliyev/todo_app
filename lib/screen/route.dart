@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/screen/add_task/view/add_task_screen.dart';
 import 'package:todo_app/screen/splash/splash_screen.dart';
 import 'package:todo_app/screen/tab/view/reminder/view/reminder_screen.dart';
 import 'package:todo_app/screen/tab/view/tab_screen.dart';
@@ -23,6 +24,11 @@ class AppRoute {
       case RouteName.taskScreen:
         return navigate(const ReminderScreen());
 
+      case RouteName.addTaskScreen:
+        return navigate(const AddTaskScreen());
+
+
+
       default:
         return navigate(
           const Scaffold(
@@ -42,4 +48,5 @@ class RouteName{
   static const String tabBoxScreen = '/tab';
   static const String taskScreen = '/task';
   static const String reminderScreen = '/reminder';
+  static const String addTaskScreen = '/add_task';
 }

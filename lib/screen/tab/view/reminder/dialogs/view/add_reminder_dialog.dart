@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/data/model/reminder_model/reminder_model.dart';
+import 'package:todo_app/screen/global_widget/show_time_picker.dart';
 import 'package:todo_app/screen/tab/view/reminder/dialogs/dialog_controller.dart';
 import 'package:todo_app/screen/tab/view/reminder/widget/dialog_text_field.dart';
 import 'package:todo_app/utils/extension/extension.dart';
 import '../../../../../../utils/images/app_images.dart';
 import '../../../../../global_widget/global_button.dart';
+import '../../../../../global_widget/show_date_picker.dart';
 import '../../reminder_controller.dart';
 
 addReminderDialog({
@@ -17,7 +19,7 @@ addReminderDialog({
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool addTaskList = true;
   DialogController controller = Get.put(DialogController());
-  DataController dataController = Get.put(DataController());
+  ReminderController dataController = Get.put(ReminderController());
   TextEditingController titleController = TextEditingController();
   TextEditingController tasksController = TextEditingController();
   TextEditingController renameController = TextEditingController();
@@ -196,17 +198,14 @@ addReminderDialog({
                               focusNodeOne.unfocus();
                               focusNodeTwo.unfocus();
                               focusNodeThree.unfocus();
-                              dateTime = await showDatePicker(
-                                helpText: 'select_a_date'.tr,
-                                confirmText: "choose".tr,
-                                cancelText: "cancel".tr,
-                                barrierDismissible: false,
-                                context: context,
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime(2030),
-                                currentDate: DateTime.now(),
-                              );
+                              dateTime = await showDatePickerWithContext(context);
                               if (dateTime != null) {
+                                if (timeOfDay != null) {
+                                  dateTime = dateTime!.copyWith(
+                                    hour: timeOfDay!.hour,
+                                    minute: timeOfDay!.minute,
+                                  );
+                                }
                                 controller.dateTrueIsError();
                               }
                             },
@@ -232,31 +231,15 @@ addReminderDialog({
                               focusNodeOne.unfocus();
                               focusNodeTwo.unfocus();
                               focusNodeThree.unfocus();
-                              timeOfDay = await showTimePicker(
-                                helpText: 'select_a_time'.tr,
-                                confirmText: "choose".tr,
-                                cancelText: "cancel_time".tr,
-                                context: context,
-                                initialEntryMode: TimePickerEntryMode.input,
-                                initialTime:
-                                    const TimeOfDay(hour: 8, minute: 0),
-                                builder: (BuildContext context, Widget? child) {
-                                  return MediaQuery(
-                                    data: MediaQuery.of(context)
-                                        .copyWith(alwaysUse24HourFormat: true),
-                                    child: child!,
-                                  );
-                                },
-                              );
-
+                              timeOfDay = await showTimePickerWithContext(context);
                               if (timeOfDay != null) {
-                                dateTime = dateTime!.copyWith(
-                                  hour: timeOfDay!.hour,
-                                  minute: timeOfDay!.minute,
-                                );
+                               if(dateTime != null) {
+                                 dateTime = dateTime!.copyWith(
+                                   hour: timeOfDay!.hour,
+                                   minute: timeOfDay!.minute,
+                                 );
+                               }
                                 controller.timeTrueIsError();
-                                debugPrint(
-                                    '______________________________$dateTime');
                               }
                             },
                             icon: Obx(
@@ -287,7 +270,7 @@ addReminderDialog({
                                     dateTime != null &&
                                     timeOfDay != null) {
                                   dataController.insertReminder(
-                                    dataModel: ReminderModel(
+                                    reminderModel: ReminderModel(
                                       id: DateTime.now().microsecond,
                                       dateOrder: DateTime.now(),
                                       title: titleController.text,
@@ -308,19 +291,15 @@ addReminderDialog({
                                 }
                                 if (dateTime == null) {
                                   controller.dateFalseIsError();
-                                  debugPrint(
-                                      '____________________________________date ${controller.dateTimeIsError.value}');
                                 }
                                 if (timeOfDay == null) {
                                   controller.timeFalseIsError();
-                                  debugPrint(
-                                      '____________________________________time ${controller.timeOfIsError.value}');
                                 }
                               } else {
                                 if (formKey.currentState!.validate() &&
                                     controller.reminderList.isNotEmpty) {
                                   dataController.insertReminder(
-                                    dataModel: ReminderModel(
+                                    reminderModel: ReminderModel(
                                       id: reminderModel.id,
                                       dateOrder: reminderModel.dateOrder,
                                       title: titleController.text,
@@ -341,12 +320,6 @@ addReminderDialog({
                                 }
                               }
                             },
-                            width: reminderModel != null
-                                ? width * 0.50
-                                : width * 0.30,
-                            height: reminderModel != null
-                                ? height * 0.05
-                                : height * 0.04,
                             color: Colors.amber,
                           ),
                           20.boxH(),

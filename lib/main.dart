@@ -14,7 +14,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.registerAdapter<ReminderModel>(ReminderModelAdapter());
   await Hive.initFlutter();
-  DataController controller = Get.put(DataController());
+  ReminderController controller = Get.put(ReminderController());
   await controller.getAllReminder();
   setUpDI();
   runApp(

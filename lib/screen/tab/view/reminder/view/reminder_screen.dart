@@ -22,7 +22,7 @@ class ReminderScreen extends StatefulWidget {
 }
 
 class _ReminderScreenState extends State<ReminderScreen> {
-  DataController dataController = Get.find<DataController>();
+  ReminderController dataController = Get.find<ReminderController>();
 
   Future<void> _init() async {
     await dataController.getAllReminder();
@@ -162,7 +162,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                                         .reminderList[index]
                                                         .isCheck[taskIndex];
                                                 dataController.updateReminder(
-                                                  dataModel: ReminderModel(
+                                                  reminderModel: ReminderModel(
                                                     dateOrder: dataController
                                                         .reminderList[index]
                                                         .dateOrder,
