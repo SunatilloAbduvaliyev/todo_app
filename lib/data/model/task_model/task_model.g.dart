@@ -18,22 +18,27 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
     };
     return TaskModel(
       tasks: (fields[0] as List).cast<String>(),
-      dates: (fields[2] as List).cast<DateTime>(),
+      startTime: (fields[2] as List).cast<DateTime>(),
       isDone: (fields[3] as List).cast<bool>(),
       id: fields[4] as DateTime,
+      endTime: (fields[5] as List).cast<DateTime>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.tasks)
       ..writeByte(2)
-      ..write(obj.dates)
+      ..write(obj.startTime)
       ..writeByte(3)
-      ..write(obj.isDone);
+      ..write(obj.isDone)
+      ..writeByte(4)
+      ..write(obj.id)
+      ..writeByte(5)
+      ..write(obj.endTime);
   }
 
   @override

@@ -1,12 +1,13 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
+import 'package:date_picker_timeline/extra/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/screen/add_task/add_task_controller.dart';
 import 'package:todo_app/screen/global_widget/global_button.dart';
 import 'package:todo_app/screen/route.dart';
 import 'package:todo_app/screen/tab/view/tasks/tasks_controller.dart';
 import 'package:todo_app/utils/extension/extension.dart';
-
 import '../../../../global_widget/drawer_widget.dart';
 import '../../../../theme/app_theme.dart';
 
@@ -21,6 +22,7 @@ class _TasksScreenState extends State<TasksScreen> {
   var darkTheme = AppTheme.darkTheme;
   var lightTheme = AppTheme.lightTheme;
   TasksController tasksController = Get.put(TasksController());
+  DateTime? dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +51,15 @@ class _TasksScreenState extends State<TasksScreen> {
                   GlobalButton(
                     title: 'add_a_task',
                     onTap: () {
+                      if (dateTime == null) {
+                        Get.put(AddTaskController())
+                            .setDateTime(DateTime.now());
+                      } else {
+                        Get.put(AddTaskController()).setDateTime(dateTime!);
+                      }
                       Navigator.pushNamed(context, RouteName.addTaskScreen);
                     },
-                    color: Colors.blue,
+                    color: const Color(0xFF8875FF),
                   ),
                 ],
               ),
@@ -62,9 +70,13 @@ class _TasksScreenState extends State<TasksScreen> {
               child: DatePicker(
                 DateTime.now(),
                 initialSelectedDate: DateTime.now(),
-                selectionColor: Colors.blue,
                 selectedTextColor: Colors.white,
+                monthTextStyle: Theme.of(context).textTheme.labelMedium!,
+                dateTextStyle: Theme.of(context).textTheme.labelLarge!,
+                dayTextStyle: Theme.of(context).textTheme.labelSmall!,
+                selectionColor: const Color(0xFF8875FF),
                 onDateChange: (date) {
+                  dateTime = date;
                   tasksController.changedDate(date);
                 },
               ),

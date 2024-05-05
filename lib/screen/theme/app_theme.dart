@@ -187,7 +187,7 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.light,
-            statusBarColor: Colors.transparent),
+            statusBarColor: Colors.transparent,),
       ),
       textTheme: const TextTheme(
         displayLarge: TextStyle(
