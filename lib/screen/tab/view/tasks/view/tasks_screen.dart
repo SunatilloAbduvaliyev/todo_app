@@ -1,6 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
-import 'package:date_picker_timeline/extra/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screen/add_task/add_task_controller.dart';
@@ -53,9 +52,9 @@ class _TasksScreenState extends State<TasksScreen> {
                     onTap: () {
                       if (dateTime == null) {
                         Get.put(AddTaskController())
-                            .setDateTime(DateTime.now());
+                            .setDateTime(DateTime.now(), TimeOfDay.now());
                       } else {
-                        Get.put(AddTaskController()).setDateTime(dateTime!);
+                        Get.put(AddTaskController()).setDateTime(dateTime!, TimeOfDay.now());
                       }
                       Navigator.pushNamed(context, RouteName.addTaskScreen);
                     },

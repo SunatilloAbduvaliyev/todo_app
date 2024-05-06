@@ -4,21 +4,27 @@ part 'task_model.g.dart';
 @HiveType(typeId: 0)
 class TaskModel {
   @HiveField(0)
-  final List<String> tasks;
+  final String title;
+  @HiveField(1)
+  final String description;
   @HiveField(2)
-  final List<DateTime> startTime;
+  final bool isDone;
   @HiveField(3)
-  final List<bool> isDone;
-  @HiveField(4)
   final DateTime id;
+  @HiveField(4)
+  final DateTime endTime;
   @HiveField(5)
-  final List<DateTime> endTime;
+  final DateTime startTime;
+  @HiveField(6)
+  final DateTime searchId;
 
   TaskModel({
-    required this.tasks,
-    required this.startTime,
+    required this.title,
+    required this.description,
     required this.isDone,
     required this.id,
-    required this.endTime
+    required this.endTime,
+    required this.startTime,
+    required this.searchId,
   });
 }

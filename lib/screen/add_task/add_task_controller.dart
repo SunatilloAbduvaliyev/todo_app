@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AddTaskController extends GetxController {
+  TimeOfDay? checkInitialTime;
   DateTime? startTime;
   DateTime? endTime;
   DateTime? idDateTime;
@@ -13,7 +14,8 @@ class AddTaskController extends GetxController {
   RxString endTimeString = "end_time".obs;
   RxString dateTimeString = "".obs;
 
-  void setDateTime(DateTime dateTime) {
+  void setDateTime(DateTime dateTime, TimeOfDay timeOfDay) {
+    checkInitialTime = timeOfDay;
     startTime = dateTime;
     endTime = dateTime;
     idDateTime = dateTime;
@@ -22,7 +24,7 @@ class AddTaskController extends GetxController {
 
   void changeDateTime(DateTime dateTime) {
     if (startTimeOfDay == null || endTimeOfDay == null) {
-      setDateTime(dateTime);
+      setDateTime(dateTime, checkInitialTime!);
     }
     if(startTimeOfDay != null) {
       startTime = dateTime.copyWith(

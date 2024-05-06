@@ -47,6 +47,8 @@ class AppTranslations extends Translations {
           "error_two_time":"You have selected the same start and end times for the task",
           "error_three_time":"You chose the wrong end time for the task! ('The start time is greater than the end time')",
           "error":"Error",
+          "error_four_time":"You want to set the elapsed time in today's account. This error :(",
+          "time_null":"Choose the time!",
         },
         'ru_RU': {
           "on_boarding_first_title": "Начните управлять своими задачами",
@@ -92,6 +94,8 @@ class AppTranslations extends Translations {
           "error_two_time":"Вы выбрали одинаковое время начала и окончания задачи.",
           "error_three_time":"Вы выбрали неправильное время от времени начала до времени окончания задания! («Время начала больше времени завершения»)",
           "error":"Ошибка",
+          "error_four_time":"Вы хотите установить прошедшее время в сегодняшнем аккаунте. Эта ошибка :(",
+          "time_null":"Выбирайте время!",
         },
         'uz_Uz': {
           "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -137,6 +141,8 @@ class AppTranslations extends Translations {
           "error_two_time":"Siz vazifa uchun bir xil boshlanish va tugash vaqtlarini tanladingiz",
           "error_three_time":"Siz topshiriqning boshlanish vaqtidan yakunlanish vaqtini noto'g'ri  tanladingiz! ('Boshlash vaqti yankunlanish vaqtidan ko'proq')",
           "error":"Xato",
+          "error_four_time":"Siz bugungi hisobda o'tgan vaqtni o'rnatmoqchisiz. Bu xato :(",
+          "time_null":"Vaqtni tanlang!",
         }
       };
 }

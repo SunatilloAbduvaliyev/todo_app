@@ -17,28 +17,34 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TaskModel(
-      tasks: (fields[0] as List).cast<String>(),
-      startTime: (fields[2] as List).cast<DateTime>(),
-      isDone: (fields[3] as List).cast<bool>(),
-      id: fields[4] as DateTime,
-      endTime: (fields[5] as List).cast<DateTime>(),
+      title: fields[0] as String,
+      description: fields[1] as String,
+      isDone: fields[2] as bool,
+      id: fields[3] as DateTime,
+      endTime: fields[4] as DateTime,
+      startTime: fields[5] as DateTime,
+      searchId: fields[6] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
-      ..write(obj.tasks)
+      ..write(obj.title)
+      ..writeByte(1)
+      ..write(obj.description)
       ..writeByte(2)
-      ..write(obj.startTime)
-      ..writeByte(3)
       ..write(obj.isDone)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.id)
+      ..writeByte(4)
+      ..write(obj.endTime)
       ..writeByte(5)
-      ..write(obj.endTime);
+      ..write(obj.startTime)
+      ..writeByte(6)
+      ..write(obj.searchId);
   }
 
   @override
