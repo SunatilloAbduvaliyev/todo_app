@@ -21,8 +21,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
+    width = context.width;
+    height = context.height;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -42,7 +42,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           controller: pageController,
           children: List.generate(
             pageData.length,
-            (index) => ListView(
+                (index) => ListView(
               children: [
                 Image.asset(
                   pageData[index].image,
@@ -55,7 +55,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: Text(
                     pageData[index].title.tr,
                     style:
-                        AppTextStyle.semiBold.copyWith(fontSize: width * 0.060),
+                    AppTextStyle.semiBold.copyWith(fontSize: width * 0.060),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -64,26 +64,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: Text(
                     pageData[index].description.tr,
                     style:
-                        AppTextStyle.regular.copyWith(fontSize: width * 0.040),
+                    AppTextStyle.regular.copyWith(fontSize: width * 0.040),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 20.boxH(),
                 Obx(
-                  () => Row(
+                      () => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ...List.generate(
                         pageData.length,
-                        (index) => Container(
+                            (index) => Container(
                           margin: EdgeInsets.symmetric(horizontal: 5.w),
                           width: 26.w,
                           height: 4.h,
                           decoration: BoxDecoration(
                               color:
-                                  pageViewController.activeIndex.value == index
-                                      ? AppColors.c80FFFF
-                                      : AppColors.cAFAFAF,
+                              pageViewController.activeIndex.value == index
+                                  ? AppColors.c80FFFF
+                                  : AppColors.cAFAFAF,
                               borderRadius: BorderRadius.circular(56.r)),
                         ),
                       ),
@@ -97,7 +97,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Obx(
-                        () => Visibility(
+                            () => Visibility(
                           visible: pageViewController.isVisible.value,
                           child: TextButton(
                             onPressed: () {
@@ -127,9 +127,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             margin: EdgeInsets.symmetric(
                                 horizontal: 24.w, vertical: 12.h),
                             child: Obx(
-                              () => Text(
+                                  () => Text(
                                   pageViewController.activeIndex.value ==
-                                          pageData.length - 1
+                                      pageData.length - 1
                                       ? 'get_started'.tr
                                       : 'next'.tr,
                                   style: AppTextStyle.medium.copyWith(

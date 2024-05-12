@@ -24,10 +24,21 @@ extension ColorExtension on String {
   }
 }
 
+extension ContextExtension on BuildContext {
+  double getWidth(){
+    return MediaQuery.of(this).size.width;
+  }
+  double getHeight(){
+    double appBarHeight = AppBar().preferredSize.height;
+    double statusBarHeight = MediaQuery.of(this).viewPadding.top;
+    double screenHeight = MediaQuery.of(this).size.height - appBarHeight - statusBarHeight;
+    return screenHeight;
+  }
+}
+
 hexStringToHexInt(String hex) {
   hex = hex.replaceFirst('#', '');
   hex = hex.length == 6 ? 'ff' + hex : hex;
   int val = int.parse(hex, radix: 16);
   return val;
 }
-

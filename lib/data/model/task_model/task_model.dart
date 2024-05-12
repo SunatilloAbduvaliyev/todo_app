@@ -17,6 +17,8 @@ class TaskModel {
   final DateTime startTime;
   @HiveField(6)
   final DateTime searchId;
+  @HiveField(7)
+  final String color;
 
   TaskModel({
     required this.title,
@@ -26,5 +28,6 @@ class TaskModel {
     required this.endTime,
     required this.startTime,
     required this.searchId,
+    required this.color
   });
 }

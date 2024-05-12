@@ -25,9 +25,9 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = context.width;
+    height = context.height;
     debugPrint('__________________________________________build run');
-    width = MediaQuery.sizeOf(context).width;
-    height = MediaQuery.sizeOf(context).height;
     return ThemeSwitchingArea(
       child: Scaffold(
         drawer: const DrawerWidget(),

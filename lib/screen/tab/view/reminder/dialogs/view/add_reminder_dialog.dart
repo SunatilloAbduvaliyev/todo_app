@@ -44,9 +44,8 @@ addReminderDialog({
     tasksController = TextEditingController();
     renameController = TextEditingController();
   }
-
-  width = MediaQuery.sizeOf(context).width;
-  height = MediaQuery.sizeOf(context).height;
+  width = context.height;
+  height = context.width;
   final FocusNode focusNodeOne = FocusNode();
   final FocusNode focusNodeTwo = FocusNode();
   final FocusNode focusNodeThree = FocusNode();

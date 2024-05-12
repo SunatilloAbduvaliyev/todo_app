@@ -1,18 +1,18 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screen/add_task/add_task_controller.dart';
+import 'package:todo_app/screen/add_task/widget/item_color.dart';
 import 'package:todo_app/screen/global_widget/global_button.dart';
 import 'package:todo_app/screen/global_widget/show_date_picker.dart';
 import 'package:todo_app/screen/global_widget/show_time_picker.dart';
 import 'package:todo_app/utils/extension/extension.dart';
 import 'package:todo_app/utils/images/app_images.dart';
 import 'package:todo_app/utils/style/app_text_style.dart';
-
-import '../../../utils/ui_uitls/ui_utils.dart';
+import '../../../utils/colors/app_colors.dart';
+import '../../../utils/ui_utils/ui_utils.dart';
 import '../../global_widget/drawer_widget.dart';
 import '../widget/input_task.dart';
 
@@ -27,9 +27,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   DateTime? dateTime;
   TimeOfDay? startTimeOfDay;
   TimeOfDay? endTimeOfDay;
-  List<String> tasks = [];
-  List<bool> checkTasks = [];
-  List<DateTime> tasksDate = [];
+  final String color = 'FFCCFF80';
   AddTaskController controller = Get.find<AddTaskController>();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -37,8 +35,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.sizeOf(context).width;
-    height = MediaQuery.sizeOf(context).height;
+    width = context.width;
+    height = context.height;
     debugPrint('_______________________________________build run');
     return ThemeSwitchingArea(
       child: SafeArea(
@@ -108,7 +106,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 startTimeOfDay =
                                     await showTimePickerWithContext(context);
                                 startTimeOfDay ??= controller.startTimeOfDay;
-                                if(startTimeOfDay!=null) {
+                                if (startTimeOfDay != null) {
                                   if (controller.checkInitialTime!.hour <
                                       startTimeOfDay!.hour) {
                                     if (endTimeOfDay != null &&
@@ -122,8 +120,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                         );
                                         controller.setStartTimeError();
                                       } else if (endTimeOfDay!.hour ==
-                                          startTimeOfDay!.hour&&endTimeOfDay!.minute <=
-                                          startTimeOfDay!.minute) {
+                                              startTimeOfDay!.hour &&
+                                          endTimeOfDay!.minute <=
+                                              startTimeOfDay!.minute) {
                                         if (!context.mounted) return;
                                         showErrorMessage(
                                           context: context,
@@ -136,7 +135,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     }
                                     if (endTimeOfDay != null &&
                                         startTimeOfDay != null &&
-                                        endTimeOfDay!.hour >= startTimeOfDay!.hour &&
+                                        endTimeOfDay!.hour >=
+                                            startTimeOfDay!.hour &&
                                         endTimeOfDay!.minute >
                                             startTimeOfDay!.minute) {
                                       controller.setStartTime(startTimeOfDay!);
@@ -152,7 +152,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     );
                                     controller.setStartTimeError();
                                   }
-                                }else{
+                                } else {
                                   if (!context.mounted) return;
                                   showErrorMessage(
                                     context: context,
@@ -161,7 +161,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   controller.setStartTimeError();
                                 }
                               },
-                              color: controller.startTimeString.value == "error"?Colors.red:const Color(0xFF8875FF),
+                              color: controller.startTimeString.value == "error"
+                                  ? Colors.red
+                                  : const Color(0xFF8875FF),
                               verticalSize: 20.0,
                             ),
                           ),
@@ -175,7 +177,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 endTimeOfDay =
                                     await showTimePickerWithContext(context);
                                 endTimeOfDay ??= controller.endTimeOfDay;
-                                if(endTimeOfDay!=null) {
+                                if (endTimeOfDay != null) {
                                   if (endTimeOfDay != null &&
                                       startTimeOfDay != null) {
                                     if (endTimeOfDay!.hour <
@@ -187,8 +189,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                       );
                                       controller.setEndTimeError();
                                     } else if (endTimeOfDay!.hour ==
-                                        startTimeOfDay!.hour&&endTimeOfDay!.minute <=
-                                        startTimeOfDay!.minute) {
+                                            startTimeOfDay!.hour &&
+                                        endTimeOfDay!.minute <=
+                                            startTimeOfDay!.minute) {
                                       if (!context.mounted) return;
                                       showErrorMessage(
                                         context: context,
@@ -201,15 +204,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   }
                                   if (endTimeOfDay != null &&
                                       startTimeOfDay != null &&
-                                      endTimeOfDay!.hour >= startTimeOfDay!.hour &&
-                                      endTimeOfDay!.minute >
+                                      endTimeOfDay!.hour >=
+                                          startTimeOfDay!.hour &&
+                                      endTimeOfDay!.minute >=
                                           startTimeOfDay!.minute) {
                                     controller.setEndTime(endTimeOfDay!);
                                   }
                                   if (dateTime != null) {
                                     controller.changeDateTime(dateTime!);
                                   }
-                                }else{
+                                } else {
                                   if (!context.mounted) return;
                                   showErrorMessage(
                                     context: context,
@@ -218,11 +222,29 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   controller.setEndTimeError();
                                 }
                               },
-                              color: controller.endTimeString.value == "error"?Colors.red:const Color(0xFF8875FF),
+                              color: controller.endTimeString.value == "error"
+                                  ? Colors.red
+                                  : const Color(0xFF8875FF),
                               verticalSize: 20.0,
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                    20.boxH(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ItemColor(onColor: (value) {}),
+                        ),
+                        Expanded(
+                          child: GlobalButton(
+                            title: 'create'.tr,
+                            onTap: () {},
+                            color: AppColors.c_8875FF,
+                            verticalSize: 20,
+                          ),
+                        )
                       ],
                     ),
                   ],
