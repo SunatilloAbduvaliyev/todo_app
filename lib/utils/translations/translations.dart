@@ -49,6 +49,7 @@ class AppTranslations extends Translations {
       "error":"Error",
       "error_four_time":"You want to set the elapsed time in today's account. This error :(",
       "time_null":"Choose the time!",
+      'fill_field': 'Fill in the fields',
     },
     'ru_RU': {
       "on_boarding_first_title": "Начните управлять своими задачами",
@@ -96,6 +97,7 @@ class AppTranslations extends Translations {
       "error":"Ошибка",
       "error_four_time":"Вы хотите установить прошедшее время в сегодняшнем аккаунте. Эта ошибка :(",
       "time_null":"Выбирайте время!",
+      "fill_field":"Заполните поля",
     },
     'uz_Uz': {
       "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -143,6 +145,7 @@ class AppTranslations extends Translations {
       "error":"Xato",
       "error_four_time":"Siz bugungi hisobda o'tgan vaqtni o'rnatmoqchisiz. Bu xato :(",
       "time_null":"Vaqtni tanlang!",
+      "fill_field": "Maydonlarni to'ldiring",
     }
   };
 }

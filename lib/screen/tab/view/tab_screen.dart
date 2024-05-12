@@ -5,6 +5,7 @@ import 'package:todo_app/screen/tab/tab_controller.dart';
 import 'package:todo_app/screen/tab/view/reminder/view/reminder_screen.dart';
 import 'package:todo_app/screen/tab/view/tasks/view/tasks_screen.dart';
 import '../../../utils/images/app_images.dart';
+import '../../controller/tasks_controller.dart';
 
 class TabBoxScreen extends StatefulWidget {
   const TabBoxScreen({super.key});
@@ -16,6 +17,18 @@ class TabBoxScreen extends StatefulWidget {
 class _TabBoxScreenState extends State<TabBoxScreen> {
   final List<Widget> screens = [const ReminderScreen(), const TasksScreen()];
   var tabController = Get.put(TabBoxController());
+  TasksController tasksController = Get.put(TasksController());
+
+  Future<void> _init() async {
+    await tasksController.getAllTasks();
+  }
+
+  @override
+  void initState() {
+    _init();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

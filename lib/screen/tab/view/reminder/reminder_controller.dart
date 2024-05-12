@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../../../data/local/local_storage.dart';
+import '../../../../data/local/local_storage/reminder_local_storage.dart';
 import '../../../../data/model/reminder_model/reminder_model.dart';
 import '../../../../services/services_locator.dart';
 

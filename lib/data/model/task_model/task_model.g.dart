@@ -8,7 +8,7 @@ part of 'task_model.dart';
 
 class TaskModelAdapter extends TypeAdapter<TaskModel> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   TaskModel read(BinaryReader reader) {
@@ -20,7 +20,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       title: fields[0] as String,
       description: fields[1] as String,
       isDone: fields[2] as bool,
-      id: fields[3] as DateTime,
+      id: fields[3] as int,
       endTime: fields[4] as DateTime,
       startTime: fields[5] as DateTime,
       searchId: fields[6] as DateTime,

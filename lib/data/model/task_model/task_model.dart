@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 part 'task_model.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class TaskModel {
   @HiveField(0)
   final String title;
@@ -10,7 +10,7 @@ class TaskModel {
   @HiveField(2)
   final bool isDone;
   @HiveField(3)
-  final DateTime id;
+  final int id;
   @HiveField(4)
   final DateTime endTime;
   @HiveField(5)

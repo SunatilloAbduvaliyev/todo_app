@@ -1,12 +1,19 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/screen/add_task/add_task_controller.dart';
 import 'package:todo_app/screen/global_widget/global_button.dart';
 import 'package:todo_app/screen/route.dart';
-import 'package:todo_app/screen/tab/view/tasks/tasks_controller.dart';
+import 'package:todo_app/screen/controller/tasks_controller.dart';
 import 'package:todo_app/utils/extension/extension.dart';
+import 'package:todo_app/utils/images/app_images.dart';
+import 'package:todo_app/utils/style/app_text_style.dart';
+import '../../../../../data/model/task_model/task_model.dart';
 import '../../../../global_widget/drawer_widget.dart';
 import '../../../../theme/app_theme.dart';
 
@@ -22,6 +29,8 @@ class _TasksScreenState extends State<TasksScreen> {
   var lightTheme = AppTheme.lightTheme;
   TasksController tasksController = Get.put(TasksController());
   DateTime? dateTime;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +63,8 @@ class _TasksScreenState extends State<TasksScreen> {
                         Get.put(AddTaskController())
                             .setDateTime(DateTime.now(), TimeOfDay.now());
                       } else {
-                        Get.put(AddTaskController()).setDateTime(dateTime!, TimeOfDay.now());
+                        Get.put(AddTaskController())
+                            .setDateTime(dateTime!, TimeOfDay.now());
                       }
                       Navigator.pushNamed(context, RouteName.addTaskScreen);
                     },
@@ -77,9 +87,84 @@ class _TasksScreenState extends State<TasksScreen> {
                 onDateChange: (date) {
                   dateTime = date;
                   tasksController.changedDate(date);
+                  tasksController.searchTask(date);
                 },
               ),
             ),
+            10.boxH(),
+            if (tasksController.tasksList.isNotEmpty)
+              Obx(
+                () => Column(
+                  children: [
+                    ...List.generate(tasksController.tasksList.length, (index) {
+                      TaskModel taskModel = tasksController.tasksList[index];
+                      return Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Color(
+                              hexStringToHexInt(taskModel.color),
+                            ),
+                            borderRadius: BorderRadius.circular(10).r),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              taskModel.title,
+                              style: AppTextStyle.bold.copyWith(
+                                fontSize: 20.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              taskModel.description,
+                              style: AppTextStyle.regular.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppImages.date,
+                                  width: 30.w,
+                                  height: 30.h,
+                                ),
+                                Text(
+                                  DateFormat('EEEE, MMMM dd, y, HH:mm')
+                                      .format(taskModel.startTime),
+                                  style: AppTextStyle.regular.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppImages.date,
+                                  width: 30.w,
+                                  height: 30.h,
+                                ),
+                                Text(
+                                  DateFormat('EEEE, MMMM dd, y, HH:mm')
+                                      .format(taskModel.endTime),
+                                  style: AppTextStyle.regular.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                          .animate(
+                            delay: Duration(milliseconds: (200 + index * 100)),
+                          )
+                          .slideX();
+                    })
+                  ],
+                ),
+              )
           ],
         ),
       ),

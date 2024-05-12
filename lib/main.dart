@@ -9,10 +9,12 @@ import 'package:todo_app/screen/theme/app_theme.dart';
 import 'package:todo_app/services/services_locator.dart';
 import 'package:todo_app/utils/translations/translations.dart';
 import 'data/model/reminder_model/reminder_model.dart';
+import 'data/model/task_model/task_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.registerAdapter<ReminderModel>(ReminderModelAdapter());
+  Hive.registerAdapter<TaskModel>(TaskModelAdapter());
   await Hive.initFlutter();
   ReminderController controller = Get.put(ReminderController());
   await controller.getAllReminder();

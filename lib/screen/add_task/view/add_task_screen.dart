@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/data/model/task_model/task_model.dart';
 import 'package:todo_app/screen/add_task/add_task_controller.dart';
 import 'package:todo_app/screen/add_task/widget/item_color.dart';
+import 'package:todo_app/screen/controller/tasks_controller.dart';
 import 'package:todo_app/screen/global_widget/global_button.dart';
 import 'package:todo_app/screen/global_widget/show_date_picker.dart';
 import 'package:todo_app/screen/global_widget/show_time_picker.dart';
@@ -27,8 +29,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   DateTime? dateTime;
   TimeOfDay? startTimeOfDay;
   TimeOfDay? endTimeOfDay;
-  final String color = 'FFCCFF80';
+  String colorItem = 'FFCCFF80';
   AddTaskController controller = Get.find<AddTaskController>();
+  TasksController crudController = Get.put(TasksController());
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -45,7 +48,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           appBar: AppBar(
             title: Text(
               'enter_your_daily_task'.tr,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleMedium,
             ),
           ),
           body: Form(
@@ -68,165 +74,174 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     ),
                     10.boxH(),
                     Obx(
-                      () => ListTile(
-                        tileColor: const Color(0xFF8875FF),
-                        title: Text(
-                          controller.dateTimeString.value,
-                          style: AppTextStyle.medium.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
+                          () =>
+                          ListTile(
+                            tileColor: const Color(0xFF8875FF),
+                            title: Text(
+                              controller.dateTimeString.value,
+                              style: AppTextStyle.medium.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
                               BorderRadius.circular(10), // BorderRadius
-                        ),
-                        trailing: SvgPicture.asset(
-                          AppImages.date,
-                          width: 24.w,
-                          height: 24.h,
-                          colorFilter: const ColorFilter.mode(
-                            Colors.white,
-                            BlendMode.srcIn,
+                            ),
+                            trailing: SvgPicture.asset(
+                              AppImages.date,
+                              width: 24.w,
+                              height: 24.h,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            onTap: () async {
+                              dateTime =
+                              await showDatePickerWithContext(context);
+                              controller.changeDateTime(dateTime!);
+                            },
                           ),
-                        ),
-                        onTap: () async {
-                          dateTime = await showDatePickerWithContext(context);
-                          controller.changeDateTime(dateTime!);
-                        },
-                      ),
                     ),
                     10.boxH(),
                     Row(
                       children: [
                         Expanded(
                           child: Obx(
-                            () => GlobalButton(
-                              title: controller.startTimeString.value,
-                              onTap: () async {
-                                startTimeOfDay =
+                                () =>
+                                GlobalButton(
+                                  title: controller.startTimeString.value,
+                                  onTap: () async {
+                                    startTimeOfDay =
                                     await showTimePickerWithContext(context);
-                                startTimeOfDay ??= controller.startTimeOfDay;
-                                if (startTimeOfDay != null) {
-                                  if (controller.checkInitialTime!.hour <
-                                      startTimeOfDay!.hour) {
-                                    if (endTimeOfDay != null &&
-                                        startTimeOfDay != null) {
-                                      if (endTimeOfDay!.hour <
+                                    startTimeOfDay ??=
+                                        controller.startTimeOfDay;
+                                    if (startTimeOfDay != null) {
+                                      if (controller.checkInitialTime!.hour <=
                                           startTimeOfDay!.hour) {
-                                        if (!context.mounted) return;
-                                        showErrorMessage(
-                                          context: context,
-                                          message: "error_three_time",
-                                        );
-                                        controller.setStartTimeError();
-                                      } else if (endTimeOfDay!.hour ==
+                                        if (endTimeOfDay != null &&
+                                            startTimeOfDay != null) {
+                                          if (endTimeOfDay!.hour <
+                                              startTimeOfDay!.hour) {
+                                            if (!context.mounted) return;
+                                            showErrorMessage(
+                                              context: context,
+                                              message: "error_three_time",
+                                            );
+                                            controller.setStartTimeError();
+                                          } else if (endTimeOfDay!.hour ==
                                               startTimeOfDay!.hour &&
-                                          endTimeOfDay!.minute <=
-                                              startTimeOfDay!.minute) {
+                                              endTimeOfDay!.minute <=
+                                                  startTimeOfDay!.minute) {
+                                            if (!context.mounted) return;
+                                            showErrorMessage(
+                                              context: context,
+                                              message: "error_two_time",
+                                            );
+                                            controller.setStartTimeError();
+                                          }
+                                        } else {
+                                          controller.setStartTime(
+                                              startTimeOfDay!);
+                                        }
+                                        if (endTimeOfDay != null &&
+                                            startTimeOfDay != null &&
+                                            endTimeOfDay!.hour >=
+                                                startTimeOfDay!.hour &&
+                                            endTimeOfDay!.minute >
+                                                startTimeOfDay!.minute) {
+                                          controller.setStartTime(
+                                              startTimeOfDay!);
+                                        }
+                                        if (dateTime != null) {
+                                          controller.changeDateTime(dateTime!);
+                                        }
+                                      } else {
                                         if (!context.mounted) return;
                                         showErrorMessage(
                                           context: context,
-                                          message: "error_two_time",
+                                          message: "error_four_time",
                                         );
                                         controller.setStartTimeError();
                                       }
                                     } else {
-                                      controller.setStartTime(startTimeOfDay!);
+                                      if (!context.mounted) return;
+                                      showErrorMessage(
+                                        context: context,
+                                        message: "time_null",
+                                      );
+                                      controller.setStartTimeError();
                                     }
-                                    if (endTimeOfDay != null &&
-                                        startTimeOfDay != null &&
-                                        endTimeOfDay!.hour >=
-                                            startTimeOfDay!.hour &&
-                                        endTimeOfDay!.minute >
-                                            startTimeOfDay!.minute) {
-                                      controller.setStartTime(startTimeOfDay!);
-                                    }
-                                    if (dateTime != null) {
-                                      controller.changeDateTime(dateTime!);
-                                    }
-                                  } else {
-                                    if (!context.mounted) return;
-                                    showErrorMessage(
-                                      context: context,
-                                      message: "error_four_time",
-                                    );
-                                    controller.setStartTimeError();
-                                  }
-                                } else {
-                                  if (!context.mounted) return;
-                                  showErrorMessage(
-                                    context: context,
-                                    message: "time_null",
-                                  );
-                                  controller.setStartTimeError();
-                                }
-                              },
-                              color: controller.startTimeString.value == "error"
-                                  ? Colors.red
-                                  : const Color(0xFF8875FF),
-                              verticalSize: 20.0,
-                            ),
+                                  },
+                                  color: controller.startTimeString.value ==
+                                      "error"
+                                      ? Colors.red
+                                      : const Color(0xFF8875FF),
+                                  verticalSize: 20.0,
+                                ),
                           ),
                         ),
                         5.boxW(),
                         Expanded(
                           child: Obx(
-                            () => GlobalButton(
-                              title: controller.endTimeString.value,
-                              onTap: () async {
-                                endTimeOfDay =
+                                () =>
+                                GlobalButton(
+                                  title: controller.endTimeString.value,
+                                  onTap: () async {
+                                    endTimeOfDay =
                                     await showTimePickerWithContext(context);
-                                endTimeOfDay ??= controller.endTimeOfDay;
-                                if (endTimeOfDay != null) {
-                                  if (endTimeOfDay != null &&
-                                      startTimeOfDay != null) {
-                                    if (endTimeOfDay!.hour <
-                                        startTimeOfDay!.hour) {
-                                      if (!context.mounted) return;
-                                      showErrorMessage(
-                                        context: context,
-                                        message: "error_one_time",
-                                      );
-                                      controller.setEndTimeError();
-                                    } else if (endTimeOfDay!.hour ==
+                                    endTimeOfDay ??= controller.endTimeOfDay;
+                                    if (endTimeOfDay != null) {
+                                      if (endTimeOfDay != null &&
+                                          startTimeOfDay != null) {
+                                        if (endTimeOfDay!.hour <
+                                            startTimeOfDay!.hour) {
+                                          if (!context.mounted) return;
+                                          showErrorMessage(
+                                            context: context,
+                                            message: "error_one_time",
+                                          );
+                                          controller.setEndTimeError();
+                                        } else if (endTimeOfDay!.hour ==
                                             startTimeOfDay!.hour &&
-                                        endTimeOfDay!.minute <=
-                                            startTimeOfDay!.minute) {
+                                            endTimeOfDay!.minute <=
+                                                startTimeOfDay!.minute) {
+                                          if (!context.mounted) return;
+                                          showErrorMessage(
+                                            context: context,
+                                            message: "error_two_time",
+                                          );
+                                          controller.setEndTimeError();
+                                        }
+                                      } else {
+                                        controller.setEndTime(endTimeOfDay!);
+                                      }
+                                      if (endTimeOfDay != null &&
+                                          startTimeOfDay != null &&
+                                          endTimeOfDay!.hour >=
+                                              startTimeOfDay!.hour &&
+                                          endTimeOfDay!.minute >=
+                                              startTimeOfDay!.minute) {
+                                        controller.setEndTime(endTimeOfDay!);
+                                      }
+                                      if (dateTime != null) {
+                                        controller.changeDateTime(dateTime!);
+                                      }
+                                    } else {
                                       if (!context.mounted) return;
                                       showErrorMessage(
                                         context: context,
-                                        message: "error_two_time",
+                                        message: "time_null",
                                       );
                                       controller.setEndTimeError();
                                     }
-                                  } else {
-                                    controller.setEndTime(endTimeOfDay!);
-                                  }
-                                  if (endTimeOfDay != null &&
-                                      startTimeOfDay != null &&
-                                      endTimeOfDay!.hour >=
-                                          startTimeOfDay!.hour &&
-                                      endTimeOfDay!.minute >=
-                                          startTimeOfDay!.minute) {
-                                    controller.setEndTime(endTimeOfDay!);
-                                  }
-                                  if (dateTime != null) {
-                                    controller.changeDateTime(dateTime!);
-                                  }
-                                } else {
-                                  if (!context.mounted) return;
-                                  showErrorMessage(
-                                    context: context,
-                                    message: "time_null",
-                                  );
-                                  controller.setEndTimeError();
-                                }
-                              },
-                              color: controller.endTimeString.value == "error"
-                                  ? Colors.red
-                                  : const Color(0xFF8875FF),
-                              verticalSize: 20.0,
-                            ),
+                                  },
+                                  color: controller.endTimeString.value ==
+                                      "error"
+                                      ? Colors.red
+                                      : const Color(0xFF8875FF),
+                                  verticalSize: 20.0,
+                                ),
                           ),
                         ),
                       ],
@@ -235,12 +250,37 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: ItemColor(onColor: (value) {}),
+                          child: ItemColor(onColor: (value) {
+                            colorItem = value;
+                          }),
                         ),
                         Expanded(
                           child: GlobalButton(
                             title: 'create'.tr,
-                            onTap: () {},
+                            onTap: () {
+                              if (_formKey.currentState!.validate() &&
+                                  endTimeOfDay != null &&
+                                  startTimeOfDay != null) {
+                                crudController.insertTask(
+                                  taskModel: TaskModel(
+                                    title: titleController.text,
+                                    description: descriptionController.text,
+                                    isDone: false,
+                                    id: DateTime.now().microsecond,
+                                    endTime: controller.endTime!,
+                                    startTime: controller.startTime!,
+                                    searchId: controller.idDateTime!,
+                                    color: colorItem,
+                                  ),
+                                );
+                                Navigator.of(context).pop();
+                              } else {
+                                showErrorMessage(
+                                  context: context,
+                                  message: "fill_field".tr,
+                                );
+                              }
+                            },
                             color: AppColors.c_8875FF,
                             verticalSize: 20,
                           ),
