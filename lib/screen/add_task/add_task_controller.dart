@@ -19,10 +19,12 @@ class AddTaskController extends GetxController {
     startTime = dateTime;
     endTime = dateTime;
     idDateTime = dateTime;
+    debugPrint('_____________________idDateTime_______________$idDateTime');
     dateTimeString.value = DateFormat("MM/dd/yyyy").format(dateTime);
   }
 
   void changeDateTime(DateTime dateTime) {
+    debugPrint('_____________________idDateTime_______________$idDateTime');
     if (startTimeOfDay == null || endTimeOfDay == null) {
       setDateTime(dateTime, checkInitialTime!);
     }
@@ -32,6 +34,7 @@ class AddTaskController extends GetxController {
         minute: startTimeOfDay!.minute,
       );
       idDateTime = dateTime;
+      debugPrint('_____________________idDateTime_______________$idDateTime');
       dateTimeString.value = DateFormat("MM/dd/yyyy").format(dateTime);
     }
     if(endTimeOfDay != null) {
@@ -40,6 +43,7 @@ class AddTaskController extends GetxController {
         minute: endTimeOfDay!.minute,
       );
       idDateTime = dateTime;
+      debugPrint('_____________________idDateTime_______________$idDateTime');
       dateTimeString.value = DateFormat("MM/dd/yyyy").format(dateTime);
     }
     if(startTimeOfDay != null && endTimeOfDay != null){
@@ -51,6 +55,7 @@ class AddTaskController extends GetxController {
         hour: endTimeOfDay!.hour,
         minute: endTimeOfDay!.minute,
       );
+      debugPrint('_____________________idDateTime_______________$idDateTime');
       idDateTime = dateTime;
       dateTimeString.value = DateFormat("MM/dd/yyyy").format(dateTime);
     }

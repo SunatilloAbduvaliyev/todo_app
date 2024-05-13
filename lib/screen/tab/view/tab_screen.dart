@@ -18,9 +18,9 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
   final List<Widget> screens = [const ReminderScreen(), const TasksScreen()];
   var tabController = Get.put(TabBoxController());
   TasksController tasksController = Get.put(TasksController());
-
+  DateTime now = DateTime.now();
   Future<void> _init() async {
-    await tasksController.getAllTasks();
+    await tasksController.getAllTasks(DateTime(now.year, now.month, now.day, 0, 0, 0));
   }
 
   @override

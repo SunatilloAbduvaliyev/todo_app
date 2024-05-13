@@ -35,7 +35,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     width = context.width;
@@ -117,22 +116,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     startTimeOfDay ??=
                                         controller.startTimeOfDay;
                                     if (startTimeOfDay != null) {
-                                      if (controller.checkInitialTime!.hour <=
-                                          startTimeOfDay!.hour) {
+                                      if (controller.checkInitialTime!.hour < startTimeOfDay!.hour) {
+                                        //2 marta tanlanishdagi xatoliklar uchun
                                         if (endTimeOfDay != null &&
                                             startTimeOfDay != null) {
-                                          if (endTimeOfDay!.hour <
-                                              startTimeOfDay!.hour) {
+                                          //taskning boshlanish vaqti tugash vaqat soati  kichiklik holatiga error
+                                          if (endTimeOfDay!.hour < startTimeOfDay!.hour) {
                                             if (!context.mounted) return;
                                             showErrorMessage(
                                               context: context,
                                               message: "error_three_time",
                                             );
                                             controller.setStartTimeError();
-                                          } else if (endTimeOfDay!.hour ==
-                                              startTimeOfDay!.hour &&
-                                              endTimeOfDay!.minute <=
-                                                  startTimeOfDay!.minute) {
+                                          }
+                                          //taskning boshlanish vaqti tugash vaqat soati  kichiklik holatiga error
+                                          //-
+                                          //taskning boshlanish vaqti va tugash vati o'zora tent bo'lgan holatiga
+                                          else if (endTimeOfDay!.hour == startTimeOfDay!.hour && endTimeOfDay!.minute == startTimeOfDay!.minute) {
                                             if (!context.mounted) return;
                                             showErrorMessage(
                                               context: context,
@@ -140,23 +140,28 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                             );
                                             controller.setStartTimeError();
                                           }
-                                        } else {
-                                          controller.setStartTime(
-                                              startTimeOfDay!);
-                                        }
-                                        if (endTimeOfDay != null &&
-                                            startTimeOfDay != null &&
-                                            endTimeOfDay!.hour >=
-                                                startTimeOfDay!.hour &&
-                                            endTimeOfDay!.minute >
-                                                startTimeOfDay!.minute) {
-                                          controller.setStartTime(
-                                              startTimeOfDay!);
-                                        }
+                                          //taskning boshlanish vaqti va tugash vati o'zora tent bo'lgan holatiga
+                                          //-
+                                          else if(endTimeOfDay!.hour >= startTimeOfDay!.hour &&  endTimeOfDay!.minute < startTimeOfDay!.minute){
+                                            if (!context.mounted) return;
+                                            showErrorMessage(
+                                              context: context,
+                                              message: "error_three_time",
+                                            );
+                                            controller.setStartTimeError();
+                                          }
+                                          //-
+                                          else if(endTimeOfDay!.hour >= startTimeOfDay!.hour){
+                                            controller.setStartTime(startTimeOfDay!);
+                                          }
+                                        }else{controller.setStartTime(startTimeOfDay!);}
+                                        //2 marta tanlanishdagi xatoliklar uchun
+                                        //-
                                         if (dateTime != null) {
                                           controller.changeDateTime(dateTime!);
                                         }
-                                      } else {
+                                      }
+                                      else {
                                         if (!context.mounted) return;
                                         showErrorMessage(
                                           context: context,
@@ -192,20 +197,21 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     await showTimePickerWithContext(context);
                                     endTimeOfDay ??= controller.endTimeOfDay;
                                     if (endTimeOfDay != null) {
-                                      if (endTimeOfDay != null &&
-                                          startTimeOfDay != null) {
-                                        if (endTimeOfDay!.hour <
-                                            startTimeOfDay!.hour) {
+                                      //taskning tugash vaqti 2 marta tanlanish holatidagi xatoliklar uchun
+                                      if (endTimeOfDay != null && startTimeOfDay != null) {
+                                        //taskning tugash vaqti boshlanish vaqtidan kichik bo'lgan holatidagi error uchun
+                                        if (endTimeOfDay!.hour < startTimeOfDay!.hour) {
                                           if (!context.mounted) return;
                                           showErrorMessage(
                                             context: context,
                                             message: "error_one_time",
                                           );
                                           controller.setEndTimeError();
-                                        } else if (endTimeOfDay!.hour ==
-                                            startTimeOfDay!.hour &&
-                                            endTimeOfDay!.minute <=
-                                                startTimeOfDay!.minute) {
+                                        }
+                                        //taskning tugash vaqti boshlanish vaqtidan kichik bo'lgan holatidagi error uchun
+                                        //-
+                                        //taskning tugash vaqti va boshlanish vaqti o'zaro teng bo'lgan holatidagi error uchun
+                                        else if (endTimeOfDay!.hour == startTimeOfDay!.hour && endTimeOfDay!.minute == startTimeOfDay!.minute) {
                                           if (!context.mounted) return;
                                           showErrorMessage(
                                             context: context,
@@ -213,17 +219,30 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                           );
                                           controller.setEndTimeError();
                                         }
-                                      } else {
+                                        //taskning tugash vaqti va boshlanish vaqti o'zaro teng bo'lgan holatidagi error uchun
+                                        //-
+                                        else if(endTimeOfDay!.hour==startTimeOfDay!.hour && endTimeOfDay!.minute <= startTimeOfDay!.minute){
+                                          if (!context.mounted) return;
+                                          showErrorMessage(
+                                            context: context,
+                                            message: "error_one_time",
+                                          );
+                                          controller.setEndTimeError();
+                                        }
+                                        //-
+                                        //success uchun
+                                        else if (endTimeOfDay!.hour >= startTimeOfDay!.hour) {
+                                          controller.setEndTime(endTimeOfDay!);
+                                        }
+                                      }
+                                      //taskning tugash vaqti 2 marta tanlanish holatidagi xatoliklar uchun
+                                      //-
+                                      //taskning tugash vaqti 1 - bo'lib   tanlanish saqlash holati
+                                      else {
                                         controller.setEndTime(endTimeOfDay!);
                                       }
-                                      if (endTimeOfDay != null &&
-                                          startTimeOfDay != null &&
-                                          endTimeOfDay!.hour >=
-                                              startTimeOfDay!.hour &&
-                                          endTimeOfDay!.minute >=
-                                              startTimeOfDay!.minute) {
-                                        controller.setEndTime(endTimeOfDay!);
-                                      }
+                                      //taskning tugash vaqti 1 - bo'lib tanlanish saqlash holati
+                                      //-
                                       if (dateTime != null) {
                                         controller.changeDateTime(dateTime!);
                                       }
@@ -272,6 +291,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     searchId: controller.idDateTime!,
                                     color: colorItem,
                                   ),
+                                  dateTime: DateTime(controller.idDateTime!.year, controller.idDateTime!.month, controller.idDateTime!.day, 0, 0, 0)
                                 );
                                 Navigator.of(context).pop();
                               } else {

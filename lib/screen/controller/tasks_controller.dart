@@ -12,18 +12,16 @@ class TasksController extends GetxController{
   RxList searchList = [].obs;
   RxString errorMessage = "".obs;
   RxString dateTime = DateFormat.yMMMd().format(DateTime.now()).obs;
-
-  void searchTask(DateTime dateTime) async {
+  void searchTask(DateTime dateTime)  {
     List<TaskModel> result = [];
-    isLoading.value = true; // Ishonchli yuklashni boshlaymiz
+    isLoading.value = true;
     try {
       debugPrint('searchTask working...');
       for(int i = 0; i <searchList.length; i++) {
-        debugPrint('searchId dateTime:  ${searchList[i].searchId}');
-        debugPrint('data dateTime: $dateTime');
         if(searchList[i].searchId == dateTime){
           result.add(searchList[i]);
         }
+        debugPrint('list result:  $result taskList: $tasksList');
       }
       tasksList.value = result;
     } catch (error) {
@@ -33,33 +31,31 @@ class TasksController extends GetxController{
     }
   }
 
-  Future<void> getAllTasks() async {
+  Future<void> getAllTasks( DateTime dateTime) async {
     isLoading.value = true;
     try {
       List<TaskModel> data = await getIt.get<TaskCrudController>().getAllTasks();
       debugPrint('_____-_______-data ${data.length}');
       if(data.isNotEmpty){
-        data.sort((a, b) => b.id.compareTo(a.id));
+        data.sort((a, b) => a.startTime.compareTo(b.startTime));
         searchList.value = data;
-        tasksList.value = data;
+        searchTask(dateTime);
       }else{
         tasksList.value = [];
       }
     } catch (error) {
-      throw Exception(error);
       errorMessage.value = error.toString();
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> insertTask({required TaskModel taskModel}) async {
+  Future<void> insertTask({required TaskModel taskModel, required DateTime dateTime}) async {
     isLoading.value = true;
     try {
       await getIt.get<TaskCrudController>().insertTask(taskModel);
-      getAllTasks();
+      getAllTasks(dateTime);
     } catch (error) {
-      throw Exception(error.toString());
       errorMessage.value = error.toString();
     }
   }
@@ -72,8 +68,6 @@ class TasksController extends GetxController{
       data.sort((a, b) => b.id.compareTo(a.id));
       tasksList.value = data;
     } catch (error) {
-      throw Exception(error);
-
       errorMessage.value = error.toString();
     }
   }
@@ -82,7 +76,7 @@ class TasksController extends GetxController{
     isLoading.value = true;
     try {
       await getIt.get<TaskCrudController>().deleteTask(id: id);
-      getAllTasks();
+      //getAllTasks(); o'sha kunni date berish kerak
     } catch (error) {
       errorMessage.value = error.toString();
     }
@@ -95,7 +89,7 @@ class TasksController extends GetxController{
       await Future.forEach(data, (element){
         getIt.get<TaskCrudController>().deleteTask(id: element.id);
       });
-      getAllTasks();
+      //getAllTasks(); o'sha kunni date berish kerak
     } catch (error) {
       errorMessage.value = error.toString();
     }
