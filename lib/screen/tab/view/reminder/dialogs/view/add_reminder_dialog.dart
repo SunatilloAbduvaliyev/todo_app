@@ -7,6 +7,7 @@ import 'package:todo_app/screen/global_widget/show_time_picker.dart';
 import 'package:todo_app/screen/tab/view/reminder/dialogs/dialog_controller.dart';
 import 'package:todo_app/screen/tab/view/reminder/widget/dialog_text_field.dart';
 import 'package:todo_app/utils/extension/extension.dart';
+import 'package:todo_app/utils/ui_utils/ui_utils.dart';
 import '../../../../../../utils/images/app_images.dart';
 import '../../../../../global_widget/global_button.dart';
 import '../../../../../global_widget/show_date_picker.dart';
@@ -15,6 +16,7 @@ import '../../reminder_controller.dart';
 addReminderDialog({
   required BuildContext context,
   ReminderModel? reminderModel,
+  required DateTime checkDateTime,
 }) {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool addTaskList = true;
@@ -44,8 +46,8 @@ addReminderDialog({
     tasksController = TextEditingController();
     renameController = TextEditingController();
   }
-  width = context.height;
-  height = context.width;
+  width = context.width;
+  height = context.height;
   final FocusNode focusNodeOne = FocusNode();
   final FocusNode focusNodeTwo = FocusNode();
   final FocusNode focusNodeThree = FocusNode();
@@ -197,15 +199,45 @@ addReminderDialog({
                               focusNodeOne.unfocus();
                               focusNodeTwo.unfocus();
                               focusNodeThree.unfocus();
-                              dateTime = await showDatePickerWithContext(context);
+                              dateTime =
+                                  await showDatePickerWithContext(context);
                               if (dateTime != null) {
-                                if (timeOfDay != null) {
-                                  dateTime = dateTime!.copyWith(
-                                    hour: timeOfDay!.hour,
-                                    minute: timeOfDay!.minute,
+                                if (reminderModel != null) {
+                                  if (dateTime == checkDateTime) {
+                                    if (dateTime!.hour >= timeOfDay!.hour &&
+                                        dateTime!.minute >= timeOfDay!.minute) {
+                                      if (!context.mounted) return;
+                                      showErrorMessage(
+                                        message: 'reminder_time_error_one',
+                                        context: context,
+                                      );
+                                      dateTime = null;
+                                      controller.dateTimeIsError();
+                                    } else {
+                                      controller.dateTrueIsError();
+                                    }
+                                  } else {
+                                    dateTime = dateTime!.copyWith(
+                                      hour: timeOfDay!.hour,
+                                      minute: timeOfDay!.minute,
+                                    );
+                                    controller.dateTrueIsError();
+                                  }
+                                } else if (timeOfDay == null) {
+                                  controller.dateTrueIsError();
+                                } else if (checkDateTime.hour >=
+                                        timeOfDay!.hour &&
+                                    checkDateTime.minute >= timeOfDay!.minute) {
+                                  if (!context.mounted) return;
+                                  showErrorMessage(
+                                    message: 'reminder_time_error_one',
+                                    context: context,
                                   );
+                                  dateTime == null;
+                                  controller.dateTimeIsError();
+                                } else {
+                                  controller.dateTrueIsError();
                                 }
-                                controller.dateTrueIsError();
                               }
                             },
                             icon: Obx(
@@ -230,15 +262,45 @@ addReminderDialog({
                               focusNodeOne.unfocus();
                               focusNodeTwo.unfocus();
                               focusNodeThree.unfocus();
-                              timeOfDay = await showTimePickerWithContext(context);
+                              timeOfDay =
+                                  await showTimePickerWithContext(context);
                               if (timeOfDay != null) {
-                               if(dateTime != null) {
-                                 dateTime = dateTime!.copyWith(
-                                   hour: timeOfDay!.hour,
-                                   minute: timeOfDay!.minute,
-                                 );
-                               }
-                                controller.timeTrueIsError();
+                                if (reminderModel != null) {
+                                  if(dateTime!=checkDateTime){
+                                    dateTime = dateTime!.copyWith(
+                                      hour: timeOfDay!.hour,
+                                      minute: timeOfDay!.minute,
+                                    );
+                                    controller.dateTrueIsError();
+                                  }else if (dateTime!.hour >= timeOfDay!.hour &&
+                                      dateTime!.minute >= timeOfDay!.minute) {
+                                    if (!context.mounted) return;
+                                    showErrorMessage(
+                                      message: 'reminder_time_error_one',
+                                      context: context,
+                                    );
+                                    dateTime = null;
+                                    controller.dateTimeIsError();
+                                  }else{
+                                    dateTime = dateTime!.copyWith(
+                                      hour: timeOfDay!.hour,
+                                      minute: timeOfDay!.minute,
+                                    );
+                                    controller.dateTrueIsError();
+                                  }
+                                }
+                                else if (checkDateTime.hour >= timeOfDay!.hour &&
+                                    checkDateTime.minute >= timeOfDay!.minute) {
+                                  if (!context.mounted) return;
+                                  showErrorMessage(
+                                    message: 'reminder_time_error_one',
+                                    context: context,
+                                  );
+                                  dateTime = null;
+                                  controller.timeOfIsError();
+                                }else{
+                                  controller.timeTrueIsError();
+                                }
                               }
                             },
                             icon: Obx(
@@ -282,7 +344,7 @@ addReminderDialog({
                                           )
                                           .toList(),
                                       dateTime: dateTime!,
-                                      checkCount:0,
+                                      checkCount: 0,
                                     ),
                                   );
                                   controller.clearLists();

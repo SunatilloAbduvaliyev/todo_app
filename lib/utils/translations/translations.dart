@@ -50,6 +50,7 @@ class AppTranslations extends Translations {
       "error_four_time":"You want to set the elapsed time in today's account. This error :(",
       "time_null":"Choose the time!",
       'fill_field': 'Fill in the fields',
+      'reminder_time_error_one': 'You have selected a time past or equal to the current time to start the reminder!. Please select the correct time.',
     },
     'ru_RU': {
       "on_boarding_first_title": "Начните управлять своими задачами",
@@ -98,6 +99,7 @@ class AppTranslations extends Translations {
       "error_four_time":"Вы хотите установить прошедшее время в сегодняшнем аккаунте. Эта ошибка :(",
       "time_null":"Выбирайте время!",
       "fill_field":"Заполните поля",
+      'reminder_time_error_one': 'Вы выбрали время, прошедшее или равное текущему, для запуска напоминания!. Пожалуйста, выберите правильное время.',
     },
     'uz_Uz': {
       "on_boarding_first_title": "Vazifalaringizni boshqaring",
@@ -146,6 +148,7 @@ class AppTranslations extends Translations {
       "error_four_time":"Siz bugungi hisobda o'tgan vaqtni o'rnatmoqchisiz. Bu xato :(",
       "time_null":"Vaqtni tanlang!",
       "fill_field": "Maydonlarni to'ldiring",
+      'reminder_time_error_one': "Eslatmani boshlash uchun o'tgan yoki joriy vaqtga teng vaqtni tanladingiz!. Iltimos, to'g'ri vaqtni tanlang.",
     }
   };
 }

@@ -24,9 +24,17 @@ class _TasksScreenState extends State<TasksScreen> {
   var darkTheme = AppTheme.darkTheme;
   var lightTheme = AppTheme.lightTheme;
   TasksController tasksController = Get.put(TasksController());
-  DateTime? dateTime;
   DateTime now = DateTime.now();
+  DateTime? dateTime;
 
+  Future<void> _init(DateTime date) async {
+    await tasksController.getAllTasks(DateTime(date.year, date.month, date.day, 0, 0, 0));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +72,11 @@ class _TasksScreenState extends State<TasksScreen> {
                           Get.put(AddTaskController())
                               .setDateTime(dateTime!, TimeOfDay.now());
                         }
-                        Navigator.pushNamed(context, RouteName.addTaskScreen);
+                        Navigator.pushNamed(context, RouteName.addTaskScreen,
+                        arguments: (value){
+                          _init(value);
+                          setState(() {});
+                        });
                       },
                       color: const Color(0xFF8875FF),
                     ),

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:todo_app/data/model/task_model/task_model.dart';
 import 'package:todo_app/screen/add_task/add_task_controller.dart';
 import 'package:todo_app/screen/add_task/widget/item_color.dart';
-import 'package:todo_app/screen/controller/tasks_controller.dart';
 import 'package:todo_app/screen/global_widget/global_button.dart';
 import 'package:todo_app/screen/global_widget/show_date_picker.dart';
 import 'package:todo_app/screen/global_widget/show_time_picker.dart';
@@ -15,12 +14,13 @@ import 'package:todo_app/utils/images/app_images.dart';
 import 'package:todo_app/utils/style/app_text_style.dart';
 import '../../../utils/colors/app_colors.dart';
 import '../../../utils/ui_utils/ui_utils.dart';
+import '../../controller/tasks_controller.dart';
 import '../../global_widget/drawer_widget.dart';
 import '../widget/input_task.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
-
+  const AddTaskScreen({super.key, required this.callback});
+  final ValueChanged callback;
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
@@ -292,6 +292,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                     color: colorItem,
                                   ),
                                   dateTime: DateTime(controller.idDateTime!.year, controller.idDateTime!.month, controller.idDateTime!.day, 0, 0, 0)
+                                );
+                                widget.callback.call(
+                                  controller.idDateTime
                                 );
                                 Navigator.of(context).pop();
                               } else {

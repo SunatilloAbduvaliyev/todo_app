@@ -23,7 +23,7 @@ class ReminderScreen extends StatefulWidget {
 
 class _ReminderScreenState extends State<ReminderScreen> {
   ReminderController dataController = Get.find<ReminderController>();
-
+  DateTime? checkDateTime;
   Future<void> _init() async {
     await dataController.getAllReminder();
   }
@@ -87,10 +87,18 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                   },
                                 );
                               } else {
+                                ReminderModel reminderModel =dataController.reminderList[index];
                                 await addReminderDialog(
                                   context: context,
                                   reminderModel:
                                       dataController.reminderList[index],
+                                    checkDateTime: checkDateTime!.copyWith(
+                                      day: reminderModel.dateTime.day,
+                                      month: reminderModel.dateTime.month,
+                                      year:reminderModel.dateTime.year,
+                                      hour:reminderModel.dateTime.hour,
+                                      minute:reminderModel.dateTime.minute,
+                                    )
                                 );
                               }
                             },
@@ -246,6 +254,13 @@ class _ReminderScreenState extends State<ReminderScreen> {
               addReminderDialog(
                 context: context,
                 reminderModel: null,
+                checkDateTime: checkDateTime!.copyWith(
+                  day: DateTime.now().day,
+                  month: DateTime.now().month,
+                  year: DateTime.now().year,
+                  hour:TimeOfDay.now().hour,
+                  minute: TimeOfDay.now().minute,
+                )
               );
             },
             child: const Icon(

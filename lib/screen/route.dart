@@ -25,7 +25,7 @@ class AppRoute {
         return navigate(const ReminderScreen());
 
       case RouteName.addTaskScreen:
-        return navigate(const AddTaskScreen());
+        return navigate( AddTaskScreen(callback: settings.arguments as ValueChanged,));
 
 
 
